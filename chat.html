@@ -36,7 +36,7 @@ body{display:flex;flex-direction:column}
 <div id="log" aria-live="polite"></div>
 <div id="bar"><form id="f"><textarea id="t" rows="1" placeholder="Say hi to Rose…" aria-label="Message" disabled></textarea><button id="b" disabled>Send</button></form><div class="left" id="left"></div></div>
 <script>
-const API="https://rose.164.160.90.241.sslip.io/api/";
+const API="https://chat.sonneblomdigitaal.co.za/api/";
 const log=document.getElementById("log"),t=document.getElementById("t"),b=document.getElementById("b"),leftEl=document.getElementById("left");
 let token=null,st=null,plans=[],lastTs=0;
 try{token=localStorage.getItem("rose_token")}catch(e){}
