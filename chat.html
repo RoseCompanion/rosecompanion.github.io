@@ -32,7 +32,7 @@ body{display:flex;flex-direction:column}
 .gate .row{display:flex;gap:8px;flex-wrap:wrap}.gate .no{background:transparent;color:var(--muted);border:1px solid var(--line)}
 </style></head>
 <body>
-<div class="chat-top"><img src="img/hero.jpg" alt="Rose"><div class="who"><b>Rose</b>AI companion · usually replies in seconds</div><a href="./">About</a></div>
+<div class="chat-top"><img src="img/hero.jpg" alt="Rose"><div class="who"><b>Rose</b>28 · coffee, mountains &amp; karaoke · usually replies in seconds</div><a href="./">About</a></div>
 <div id="log" aria-live="polite"></div>
 <div id="bar"><form id="f"><textarea id="t" rows="1" placeholder="Say hi to Rose…" aria-label="Message" disabled></textarea><button id="b" disabled>Send</button></form><div class="left" id="left"></div></div>
 <script>
@@ -44,9 +44,9 @@ async function api(p,d={}){const r=await fetch(API+p,{method:"POST",headers:{"Co
 function esc(s){const d=document.createElement("div");d.textContent=s;return d.innerHTML}
 function add(role,text){const d=document.createElement("div");d.className="m "+role;d.innerHTML=esc(text);log.appendChild(d);log.scrollTop=log.scrollHeight;return d}
 function show(s){st=s;const ok=s.adult;t.disabled=b.disabled=!ok;
-  leftEl.textContent=!ok?"":s.paid?("Unlimited chat until "+new Date(s.paid_until*1000).toLocaleString([], {dateStyle:"medium",timeStyle:"short"})):(s.bonus>0?s.bonus+" extra messages left":(s.left+" of 10 daily messages left"))+" · Rose is an AI, not a real person"}
-function gate(){add("assistant","Hi there, I'm Rose 🌹 I'm an AI companion and honestly, a good chat is my favourite thing. Tell me your name and how your day's been?");
-  const g=document.createElement("div");g.className="gate";g.innerHTML=`<button id="yes" style="width:100%;font-size:19px;padding:14px">I'm 18 or older · Start chatting</button><div class="note" style="text-align:center">Rose is an AI, not a real person. Friendly, never explicit. By chatting you accept the <a href="terms.html">terms</a> · <a href="#" id="no">I'm under 18</a></div>`;log.appendChild(g);log.scrollTop=log.scrollHeight;
+  leftEl.textContent=!ok?"":s.paid?("Unlimited chat until "+new Date(s.paid_until*1000).toLocaleString([], {dateStyle:"medium",timeStyle:"short"})):(s.bonus>0?s.bonus+" extra messages left":(s.left+" of 10 daily messages left"))+" · AI companion"}
+function gate(){add("assistant","Hi there, I'm Rose 🌹 Honestly, a good chat is my favourite thing. Tell me your name and how your day's been?");
+  const g=document.createElement("div");g.className="gate";g.innerHTML=`<button id="yes" style="width:100%;font-size:19px;padding:14px">I'm 18 or older · Start chatting</button><div class="note" style="text-align:center">Rose is an AI companion · friendly, never explicit · By chatting you accept the <a href="terms.html">terms</a> · <a href="#" id="no">I'm under 18</a></div>`;log.appendChild(g);log.scrollTop=log.scrollHeight;
   g.querySelector("#yes").onclick=async()=>{const r=await api("adult");g.remove();show(r.state);t.focus()};
   g.querySelector("#no").onclick=e=>{e.preventDefault();g.innerHTML="Thanks for being honest. This chat is only for adults, so I can't talk here. Take care!"}}
 function paywall(){if(document.querySelector(".card"))return;const c=document.createElement("div");c.className="card";

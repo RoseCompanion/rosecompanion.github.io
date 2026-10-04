@@ -42,7 +42,7 @@ page("index.html", "Rose · AI companion for good conversation",
 <p class="lead">A warm, witty companion who's always up for a proper conversation, any time of day. Tell her about your
 garden, the rugby, the old days or that trip you've been dreaming of. She listens, asks good questions and remembers
 what matters to you ❤️</p>
-<p class="ai">Rose is an <strong>AI</strong>, not a real person, and says so plainly if you ask. Friendly, never explicit. 18+.</p>
+<p class="ai">Rose is an AI companion · friendly, never explicit · 18+</p>
 {cta}</div></section>
 
 <section><h2>How it works</h2><ol class="steps">
