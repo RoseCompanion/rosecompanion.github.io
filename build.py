@@ -30,7 +30,7 @@ or financial advice. If you're in crisis, please contact local emergency service
     open(path, "w").write(out)
 
 
-cta = f'<a class="btn" href="{BOT}">Chat with Rose 🌹</a>'
+cta = f'<a class="btn" href="chat.html">Chat with Rose 🌹</a><p class="small">Right here in your browser, nothing to install. Prefer Telegram? <a href="{BOT}">Chat on Telegram</a>.</p>'
 gallery = "".join(f'<figure><img src="img/{f}.jpg" alt="Illustration of Rose: {c}" loading="lazy"><figcaption>{c}</figcaption></figure>'
                   for f, c in GALLERY)
 prices = "".join(f"<tr><td>{t}</td><td>${usd}</td><td>{stars} ⭐</td></tr>" for t, usd, stars in PRICES)
@@ -46,9 +46,9 @@ what matters to you ❤️</p>
 {cta}</div></section>
 
 <section><h2>How it works</h2><ol class="steps">
-<li><strong>Open Rose on Telegram.</strong> Tap the button and press Start. Telegram is free on any phone or computer.</li>
+<li><strong>Tap "Chat with Rose".</strong> The chat opens right here in your browser, on any phone or computer. (Rose is on Telegram too.)</li>
 <li><strong>Confirm you're 18 or older</strong> and say hello. Your first 10 messages each day cost nothing.</li>
-<li><strong>Want more time together?</strong> Choose a plan inside the chat and pay by card, Apple Pay, Google Pay or Telegram Stars.</li>
+<li><strong>Want more time together?</strong> Choose a plan inside the chat and pay by card, Apple Pay or Google Pay (or Telegram Stars on Telegram).</li>
 </ol></section>
 
 <section><h2>Rose's world</h2><p>Rose loves mountains, beach days, karaoke, festivals and a proper coffee, and she's just
@@ -95,7 +95,7 @@ Telegram. Plans are one-off purchases and do not renew automatically.</p>
 <h2>7. Availability</h2><p>We aim to keep Rose available around the clock but can't guarantee uninterrupted service. If
 an outage stops you using time you paid for, contact us for a refund or extension.</p>
 <h2>8. Changes</h2><p>We may update these terms; the date above shows the latest version.</p>
-<h2>9. Contact</h2><p>Send <code>/paysupport</code> in the <a href="{BOT}">Rose chat</a>. We reply within 48 hours.</p></article>""")
+<h2>9. Contact</h2><p>In the <a href="chat.html">website chat</a>, send a message starting with "Support:" (on Telegram, send <code>/paysupport</code>). We reply within 48 hours.</p></article>""")
 
 page("privacy.html", "Privacy · Rose AI companion", "How Rose handles your data.", f"""
 <article><h1>Privacy policy</h1><p class="small">Last updated {UPDATED}</p>

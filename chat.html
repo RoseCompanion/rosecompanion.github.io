@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,interactive-widget=resizes-content">
+<title>Chat with Rose</title><meta name="description" content="Chat with Rose, a warm and witty AI companion. Right here in your browser, nothing to install. Adults 18+.">
+<meta property="og:title" content="Chat with Rose"><meta property="og:description" content="A warm, witty AI companion for good conversation. Nothing to install. 18+.">
+<meta property="og:image" content="https://rosecompanion.github.io/img/hero.jpg">
+<link rel="icon" href="img/hero.jpg"><link rel="stylesheet" href="style.css">
+<style>
+html,body{height:100%}
+body{display:flex;flex-direction:column}
+.chat-top{display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid var(--line);background:var(--card)}
+.chat-top img{width:44px;height:44px;border-radius:50%;object-fit:cover}
+.chat-top .who{flex:1;font:15px/1.3 system-ui,sans-serif}.chat-top .who b{font:bold 19px Georgia,serif;display:block}
+.chat-top a{font:14px system-ui,sans-serif;color:var(--muted)}
+#log{flex:1;overflow-y:auto;padding:16px;max-width:760px;width:100%;margin:0 auto;font:17px/1.5 system-ui,sans-serif}
+.m{max-width:82%;padding:10px 14px;border-radius:18px;margin:6px 0;white-space:pre-wrap;word-wrap:break-word}
+.assistant{background:var(--card);border:1px solid var(--line);border-bottom-left-radius:6px}
+.user{background:var(--rose);color:#fff;margin-left:auto;border-bottom-right-radius:6px}
+.team{background:var(--rose-soft);font-size:15px;margin:10px auto;text-align:center}
+.typing{color:var(--muted);font-style:italic;font-size:15px}
+#bar{border-top:1px solid var(--line);background:var(--card);padding:10px 12px}
+#bar form{display:flex;gap:8px;max-width:760px;margin:auto}
+#bar textarea{flex:1;resize:none;font:17px system-ui,sans-serif;padding:10px 14px;border-radius:22px;border:1px solid var(--line);background:var(--bg);color:var(--ink);max-height:140px}
+#bar button,.card button,.gate button{background:var(--rose);color:#fff;border:0;border-radius:999px;font:600 17px system-ui,sans-serif;padding:10px 18px;cursor:pointer}
+#bar button:disabled{opacity:.5}
+.left{font:13px system-ui,sans-serif;color:var(--muted);text-align:center;margin-top:6px}
+.card,.gate{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin:12px 0;font:16px/1.5 system-ui,sans-serif}
+.card h3,.gate h3{margin:0 0 6px;font:bold 20px Georgia,serif}
+.plans{display:grid;gap:8px;margin-top:10px}
+.plans button{display:flex;justify-content:space-between;width:100%;text-align:left}
+.note{font-size:13px;color:var(--muted);margin-top:8px}
+.gate input{font:17px system-ui,sans-serif;padding:10px 14px;border-radius:12px;border:1px solid var(--line);width:100%;margin:8px 0;background:var(--bg);color:var(--ink)}
+.gate .row{display:flex;gap:8px;flex-wrap:wrap}.gate .no{background:transparent;color:var(--muted);border:1px solid var(--line)}
+</style></head>
+<body>
+<div class="chat-top"><img src="img/hero.jpg" alt="Rose"><div class="who"><b>Rose</b>AI companion · usually replies in seconds</div><a href="./">About</a></div>
+<div id="log" aria-live="polite"></div>
+<div id="bar"><form id="f"><textarea id="t" rows="1" placeholder="Type a message…" aria-label="Message" disabled></textarea><button id="b" disabled>Send</button></form><div class="left" id="left"></div></div>
+<script>
+const API="https://rose.164.160.90.241.sslip.io/api/";
+const log=document.getElementById("log"),t=document.getElementById("t"),b=document.getElementById("b"),leftEl=document.getElementById("left");
+let token=null,st=null,plans=[],lastTs=0;
+try{token=localStorage.getItem("rose_token")}catch(e){}
+async function api(p,d={}){const r=await fetch(API+p,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({token,...d})});return r.json()}
+function esc(s){const d=document.createElement("div");d.textContent=s;return d.innerHTML}
+function add(role,text){const d=document.createElement("div");d.className="m "+role;d.innerHTML=esc(text);log.appendChild(d);log.scrollTop=log.scrollHeight;return d}
+function show(s){st=s;const ok=s.adult;t.disabled=b.disabled=!ok;
+  leftEl.textContent=!ok?"":s.paid?("Unlimited chat until "+new Date(s.paid_until*1000).toLocaleString([], {dateStyle:"medium",timeStyle:"short"})):(s.bonus>0?s.bonus+" extra messages left":(s.left+" of 10 daily messages left"))+" · Rose is an AI, not a real person"}
+function gate(){const g=document.createElement("div");g.className="gate";g.innerHTML=`<h3>Hello, I'm Rose 🌹</h3>I'm an AI companion: here for good conversation whenever you'd like some company. I'm not a real person, and I keep things friendly, never explicit.<br><br>What should I call you? <input id="nm" maxlength="30" placeholder="Your first name (optional)" autocomplete="given-name"><div class="row"><button id="yes">I'm 18 or older, let's chat</button><button class="no" id="no">I'm under 18</button></div><div class="note">By chatting you agree to the <a href="terms.html">terms</a> and <a href="privacy.html">privacy policy</a>.</div>`;log.appendChild(g);
+  g.querySelector("#yes").onclick=async()=>{const r=await api("adult",{name:g.querySelector("#nm").value});g.remove();show(r.state);const n=r.state.name;add("assistant",`Lovely${n?", "+n:""}. So tell me a little about yourself. How has your day been?`);t.focus()};
+  g.querySelector("#no").onclick=()=>{g.innerHTML="Thanks for being honest. This chat is only for adults, so I can't talk here. Take care!"}}
+function paywall(){if(document.querySelector(".card"))return;const c=document.createElement("div");c.className="card";
+  c.innerHTML=`<h3>That's your 10 messages for today</h3>They reset tomorrow, or keep chatting now:<div class="plans">${plans.map(p=>`<button data-k="${p.key}"><span>${esc(p.title)}</span><span>$${p.usd.toFixed(2)}</span></button>`).join("")}</div><div class="note">Pay by card, Apple Pay or Google Pay. Payments are handled securely by Yoco and charged in South African rand at today's rate; your bank converts it. One-off payment, nothing renews. <a href="refunds.html">Refunds</a>.</div>`;
+  c.querySelectorAll("button").forEach(x=>x.onclick=async()=>{x.disabled=true;x.lastChild.textContent="Opening…";const r=await api("checkout",{plan:x.dataset.k});if(r.url)location.href=r.url;else{x.disabled=false;alertMsg(r.error||"Please try again.")}});
+  log.appendChild(c);log.scrollTop=log.scrollHeight}
+function alertMsg(s){add("team",s)}
+async function send(e){e.preventDefault();const text=t.value.trim();if(!text)return;t.value="";add("user",text);b.disabled=true;const ty=add("assistant typing","Rose is typing…");
+  try{const r=await api("send",{text});ty.remove();(r.messages||[]).forEach(m=>add(m.role,m.text));if(r.paywall)paywall();if(r.state)show(r.state);if(r.error==="slow down")add("team","One moment, then try again.")}
+  catch(err){ty.remove();add("team","Connection hiccup. Please try again.")}
+  b.disabled=!st||!st.adult;t.focus()}
+document.getElementById("f").onsubmit=send;
+t.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();send(e)}});
+t.addEventListener("input",()=>{t.style.height="auto";t.style.height=Math.min(t.scrollHeight,140)+"px"});
+async function waitPaid(){const w=add("team","Thank you! Confirming your payment…");for(let i=0;i<40;i++){const r=await api("poll");if(r.state&&(r.state.paid||r.state.bonus>0)){w.textContent="Payment received, thank you! You're all set. Now, where were we? 🌹";show(r.state);return}await new Promise(z=>setTimeout(z,3000))}w.textContent="Still waiting for the payment to confirm. If you were charged, it will unlock shortly; or ask for help by typing a message starting with Support:"}
+setInterval(async()=>{if(st&&st.paused){const r=await api("poll",{since:lastTs});(r.messages||[]).filter(m=>m.role==="team"&&m.ts>lastTs).forEach(m=>{add("team",m.text);lastTs=m.ts});show(r.state)}},20000);
+(async()=>{try{const r=await api("session");token=r.token;try{localStorage.setItem("rose_token",token)}catch(e){}plans=r.plans;
+  r.messages.forEach(m=>{add(m.role,m.text);lastTs=Math.max(lastTs,m.ts)});show(r.state);if(!r.state.adult)gate();
+  const q=new URLSearchParams(location.search);if(q.get("paid"))waitPaid();if(q.get("failed"))add("team","The payment didn't go through. Nothing was charged; you can try again any time.");
+  if(q.has("paid")||q.has("failed"))history.replaceState(null,"","chat.html");
+  if(r.state.adult&&!r.state.paid&&r.state.left===0&&r.state.bonus===0)paywall()}
+  catch(e){add("team","Rose can't connect right now. Please try again in a minute.")}})();
+</script></body></html>
