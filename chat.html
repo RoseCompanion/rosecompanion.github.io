@@ -34,7 +34,7 @@ body{display:flex;flex-direction:column}
 <body>
 <div class="chat-top"><img src="img/hero.jpg" alt="Rose"><div class="who"><b>Rose</b>AI companion · usually replies in seconds</div><a href="./">About</a></div>
 <div id="log" aria-live="polite"></div>
-<div id="bar"><form id="f"><textarea id="t" rows="1" placeholder="Type a message…" aria-label="Message" disabled></textarea><button id="b" disabled>Send</button></form><div class="left" id="left"></div></div>
+<div id="bar"><form id="f"><textarea id="t" rows="1" placeholder="Say hi to Rose…" aria-label="Message" disabled></textarea><button id="b" disabled>Send</button></form><div class="left" id="left"></div></div>
 <script>
 const API="https://rose.164.160.90.241.sslip.io/api/";
 const log=document.getElementById("log"),t=document.getElementById("t"),b=document.getElementById("b"),leftEl=document.getElementById("left");
@@ -45,9 +45,10 @@ function esc(s){const d=document.createElement("div");d.textContent=s;return d.i
 function add(role,text){const d=document.createElement("div");d.className="m "+role;d.innerHTML=esc(text);log.appendChild(d);log.scrollTop=log.scrollHeight;return d}
 function show(s){st=s;const ok=s.adult;t.disabled=b.disabled=!ok;
   leftEl.textContent=!ok?"":s.paid?("Unlimited chat until "+new Date(s.paid_until*1000).toLocaleString([], {dateStyle:"medium",timeStyle:"short"})):(s.bonus>0?s.bonus+" extra messages left":(s.left+" of 10 daily messages left"))+" · Rose is an AI, not a real person"}
-function gate(){const g=document.createElement("div");g.className="gate";g.innerHTML=`<h3>Hello, I'm Rose 🌹</h3>I'm an AI companion: here for good conversation whenever you'd like some company. I'm not a real person, and I keep things friendly, never explicit.<br><br>What should I call you? <input id="nm" maxlength="30" placeholder="Your first name (optional)" autocomplete="given-name"><div class="row"><button id="yes">I'm 18 or older, let's chat</button><button class="no" id="no">I'm under 18</button></div><div class="note">By chatting you agree to the <a href="terms.html">terms</a> and <a href="privacy.html">privacy policy</a>.</div>`;log.appendChild(g);
-  g.querySelector("#yes").onclick=async()=>{const r=await api("adult",{name:g.querySelector("#nm").value});g.remove();show(r.state);const n=r.state.name;add("assistant",`Lovely${n?", "+n:""}. So tell me a little about yourself. How has your day been?`);t.focus()};
-  g.querySelector("#no").onclick=()=>{g.innerHTML="Thanks for being honest. This chat is only for adults, so I can't talk here. Take care!"}}
+function gate(){add("assistant","Hi there, I'm Rose 🌹 I'm an AI companion and honestly, a good chat is my favourite thing. Tell me your name and how your day's been?");
+  const g=document.createElement("div");g.className="gate";g.innerHTML=`<button id="yes" style="width:100%;font-size:19px;padding:14px">I'm 18 or older · Start chatting</button><div class="note" style="text-align:center">Rose is an AI, not a real person. Friendly, never explicit. By chatting you accept the <a href="terms.html">terms</a> · <a href="#" id="no">I'm under 18</a></div>`;log.appendChild(g);log.scrollTop=log.scrollHeight;
+  g.querySelector("#yes").onclick=async()=>{const r=await api("adult");g.remove();show(r.state);t.focus()};
+  g.querySelector("#no").onclick=e=>{e.preventDefault();g.innerHTML="Thanks for being honest. This chat is only for adults, so I can't talk here. Take care!"}}
 function paywall(){if(document.querySelector(".card"))return;const c=document.createElement("div");c.className="card";
   c.innerHTML=`<h3>That's your 10 messages for today</h3>They reset tomorrow, or keep chatting now:<div class="plans">${plans.map(p=>`<button data-k="${p.key}"><span>${esc(p.title)}</span><span>$${p.usd.toFixed(2)}</span></button>`).join("")}</div><div class="note">Pay by card, Apple Pay or Google Pay. Payments are handled securely by Yoco and charged in South African rand at today's rate; your bank converts it. One-off payment, nothing renews. <a href="refunds.html">Refunds</a>.</div>`;
   c.querySelectorAll("button").forEach(x=>x.onclick=async()=>{x.disabled=true;x.lastChild.textContent="Opening…";const r=await api("checkout",{plan:x.dataset.k});if(r.url)location.href=r.url;else{x.disabled=false;alertMsg(r.error||"Please try again.")}});
