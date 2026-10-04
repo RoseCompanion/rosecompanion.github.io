@@ -1,4 +1,4 @@
-"""Builds the Rose companion site (GitHub Pages: Hanru269/rose-companion). Run: python3 build.py"""
+"""Builds the Rose companion site (GitHub Pages: RoseCompanion/rose-companion). Run: python3 build.py"""
 import html
 
 BOT = "https://t.me/EveningCompany_bot"
@@ -17,7 +17,7 @@ def page(path, title, desc, body):
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{html.escape(title)}</title><meta name="description" content="{html.escape(desc)}">
 <meta property="og:title" content="{html.escape(title)}"><meta property="og:description" content="{html.escape(desc)}">
-<meta property="og:image" content="https://hanru269.github.io/rose-companion/img/hero.jpg">
+<meta property="og:image" content="https://rosecompanion.github.io/img/hero.jpg">
 <link rel="icon" href="img/hero.jpg"><link rel="stylesheet" href="style.css"></head>
 <body><header class="top"><a class="brand" href="./"><img src="img/hero.jpg" alt="">Rose<span>AI companion</span></a>
 <nav>{nav}</nav></header>
