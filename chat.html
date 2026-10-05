@@ -76,7 +76,7 @@ a{color:var(--accent)}
 footer{font-size:12px;color:var(--muted);text-align:center;margin-top:22px}
 #lightbox{position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:9;padding:16px}
 #lightbox img{max-width:100%;max-height:90vh;border-radius:12px}
-@media (max-width:640px){.split{grid-template-columns:1fr}.bio{gap:14px}.bio img{width:96px;height:96px}.bio h1{font-size:24px}}
+@media (max-width:640px){.split{grid-template-columns:1fr}.top{display:none}.bio{gap:12px;padding:10px 0 12px}.bio img{width:72px;height:72px}.bio h1{font-size:21px}.bio .sub{font-size:12.5px}.bio p{font-size:13px;margin-top:4px}.status{font-size:12px}.card h2{padding:9px 14px}#log{height:max(170px,calc(100svh - 400px))}.pills{flex-wrap:nowrap;overflow-x:auto}.pills button{flex:none}}
 @media (prefers-reduced-motion:reduce){.lockicon{animation:none}}
 </style></head>
 <body><div class="wrap">
@@ -95,12 +95,12 @@ footer{font-size:12px;color:var(--muted);text-align:center;margin-top:22px}
 <section class="card hot" id="albumbox"><h2>🔥 My private album <span class="cnt" id="albumcount"></span></h2><div class="bd">
 <div class="car" id="car"><button class="nav prev" aria-label="Previous photo">‹</button><button class="nav next" aria-label="Next photo">›</button><div class="cap" id="carcap"></div><div class="ov" id="carov"><span class="lockicon">🔒</span><b>Just for you…</b><span>Private photos I don't post anywhere else</span><button class="unl" type="button">Unlock my album</button></div></div>
 <div class="dots" id="dots"></div>
-<div class="album-cta" id="albumcta">New photos every week · <a href="#" id="unlock">see plans</a></div>
+<div class="album-cta" id="albumcta">New photos every week · from $14.99 · <a href="#" id="unlock">see plans</a></div>
 </div></section>
 <section class="card" id="vipbox"><h2>VIP Telegram chat · 18+</h2><div class="bd"><div class="vip" id="vip">
 <div class="tg"><span>✈</span>Me, in your pocket</div>
 <ul><li>Our own private chat on Telegram</li><li>Unlimited messages, priority replies</li><li>I remember everything about you</li><li>A daily photo + my full private album</li></ul>
-<div class="gate" id="vipgate">For adults 18+ · you'll confirm your age when you unlock<button id="vipbtn">Unlock VIP chat</button></div>
+<div class="gate" id="vipgate">$49.99 for 30 days · one-off, nothing renews · 18+<button id="vipbtn">Unlock VIP chat</button></div>
 </div></div></section>
 </div>
 <footer>Rose is an AI companion · photos are illustrations of her world · <a href="terms.html">terms</a> · <a href="privacy.html">privacy</a> · <a href="refunds.html">refunds</a></footer>
@@ -149,7 +149,7 @@ function offerCard(){const o=offers[OFFER];if(!o||!st)return;
   log.appendChild(c);log.scrollTop=log.scrollHeight}
 function alertMsg(s){add("team",s)}
 const pillsEl=document.getElementById("pills"),ageEl=document.getElementById("age"),ok18=document.getElementById("ok18");
-const PILLS=[["coffee spots","Let's talk coffee spots ☕"],["karaoke picks","Karaoke picks! What would you sing? 🎤"],["favourite hikes","Tell me about your favourite hikes ⛰️"],["long day","I've had a long day 😮‍💨"]];
+const PILLS=[["Hi gorgeous 👋","Hi gorgeous 👋"],["Tell me about you","Tell me a bit about yourself 😊"],["Your private album? 🔥","Tell me about your private album 🔥"],["Long day…","I've had a long day 😮‍💨"]];
 function show(s){st=s;vipUi(s);if(s.adult)ageEl.hidden=true;
   leftEl.textContent=!s.adult?"":s.paid?("Unlimited chat until "+new Date(s.paid_until*1000).toLocaleString([], {dateStyle:"medium",timeStyle:"short"})):(s.bonus>0?s.bonus+" extra messages left":(s.left+" free messages left today"))+" · AI companion"}
 function pills(on){pillsEl.innerHTML="";if(!on)return;PILLS.forEach(([l,msg])=>{const k=document.createElement("button");k.type="button";k.textContent=l;k.onclick=()=>{t.value=msg;send({preventDefault(){}})};pillsEl.appendChild(k)})}
