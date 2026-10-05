@@ -9,6 +9,7 @@
 :root{--bg:#ffffff;--soft:#fbf6f4;--line:#eee3df;--ink:#2b2226;--muted:#8a7b78;--accent:#c2416b;--accent2:#e8789a;--gold:#c9a27e}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 Lato,system-ui,sans-serif}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:url(img/watermark.jpg) right bottom/auto 100vh no-repeat;opacity:.16;filter:saturate(.8);-webkit-mask-image:linear-gradient(to right,transparent 55%,#000 85%);mask-image:linear-gradient(to right,transparent 55%,#000 85%)}
 a{color:var(--accent)}
 .wrap{max-width:760px;margin:0 auto;padding:0 16px 40px}
 .top{display:flex;justify-content:space-between;align-items:center;padding:14px 0;font-size:13px;color:var(--muted)}
@@ -79,7 +80,7 @@ footer{font-size:12px;color:var(--muted);text-align:center;margin-top:22px}
 @media (prefers-reduced-motion:reduce){.lockicon{animation:none}}
 </style></head>
 <body><div class="wrap">
-<div class="top"><b>Rose</b><span>🔒 private &amp; discreet</span></div>
+<div class="top"><b>Rose</b></div>
 <section class="bio"><img src="img/main.jpg" alt="Rose on the beach"><div>
 <h1>Rose</h1><div class="sub">28 · beach girl, coffee lover, terrible singer 😉</div>
 <div class="status"><i></i>Online now · usually replies in seconds</div>
