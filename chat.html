@@ -48,6 +48,7 @@ a{color:var(--accent)}
 #b:disabled{opacity:.5}
 .age{display:flex;gap:7px;align-items:center;flex-wrap:wrap;font-size:12.5px;color:var(--muted);margin-top:8px}
 .age input{accent-color:var(--accent)}
+.age[hidden]{display:none}
 .age.nudge{color:var(--ink);font-weight:700}
 .left{font-size:12px;color:var(--muted);margin-top:6px}
 .card{border:1px solid var(--accent);background:var(--panel2);padding:12px 14px;margin:12px 0;font-size:14px}
@@ -108,7 +109,7 @@ footer{max-width:980px;margin:0 auto;padding:0 16px 30px;font-size:12px;color:va
 <div class="lock">Just you and Rose. Conversations are private and never shared.</div>
 <div id="log" aria-live="polite"></div>
 <div id="bar"><div class="pills" id="pills"></div><form id="f"><textarea id="t" rows="1" placeholder="Write to Rose…" aria-label="Message"></textarea><button id="b">Send</button></form>
-<label class="age" id="age"><input type="checkbox" id="ok18"> I'm 18 or older · Rose is an AI companion, friendly and never explicit</label><div class="left" id="left"></div></div>
+<label class="age" id="age" hidden><input type="checkbox" id="ok18"> I'm 18 or older (required for payment) · Rose is an AI companion, friendly and never explicit</label><div class="left" id="left"></div></div>
 </div></section>
 <div class="split">
 <section class="box" id="albumbox"><h2>🔒 Private album</h2><div class="bd">
@@ -119,7 +120,7 @@ footer{max-width:980px;margin:0 auto;padding:0 16px 30px;font-size:12px;color:va
 <section class="box" id="vipbox"><h2>🌹 VIP chat · 18+</h2><div class="bd"><div class="vip" id="vip">
 <div><span class="badge">VIP</span> <span class="badge">18+</span></div>
 <ul><li>Unlimited messages, no daily limit</li><li>Priority replies and longer conversations</li><li>Rose remembers more about you</li><li>A daily photo and the full private album</li></ul>
-<div class="gate" id="vipgate">🔒 For adults 18+ only. Confirm your age in the chat box above, then unlock.<button id="vipbtn">Unlock VIP chat</button></div>
+<div class="gate" id="vipgate">🔒 For adults 18+ only. You'll confirm your age when you unlock.<button id="vipbtn">Unlock VIP chat</button></div>
 </div></div></section>
 </div>
 </main>
@@ -158,26 +159,26 @@ function vipUi(s){const v=document.getElementById("vip"),g=document.getElementBy
 document.getElementById("vipbtn").onclick=async()=>{if(!await ensureAdult()){document.getElementById("chat").scrollIntoView({block:"start"});return}toPlans("Join VIP 🌹",true)};
 function paywall(){if(document.querySelector(".card"))return;const c=document.createElement("div");c.className="card";
   c.innerHTML=`<h3>That's your free messages for today</h3>They reset tomorrow, or keep chatting now:<div class="plans">${plans.map(p=>`<button data-k="${p.key}"><span>${esc(p.title)}</span><span>$${p.usd.toFixed(2)}</span></button>`).join("")}</div><div class="note">Pay by card, Apple Pay or Google Pay. Payments are handled securely by Yoco and charged in South African rand at today's rate; your bank converts it. One-off payment, nothing renews. <a href="refunds.html">Refunds</a>.</div>`;
-  c.querySelectorAll("button").forEach(x=>x.onclick=async()=>{x.disabled=true;x.lastChild.textContent="Opening…";const r=await api("checkout",{plan:x.dataset.k});if(r.url)location.href=r.url;else{x.disabled=false;alertMsg(r.error||"Please try again.")}});
+  c.querySelectorAll("button").forEach(x=>x.onclick=async()=>{if(!await ensureAdult())return;x.disabled=true;x.lastChild.textContent="Opening…";const r=await api("checkout",{plan:x.dataset.k});if(r.url)location.href=r.url;else{x.disabled=false;alertMsg(r.error||"Please try again.")}});
   log.appendChild(c);log.scrollTop=log.scrollHeight}
-function offerCard(){const o=offers[OFFER];if(!o||!st||!st.adult)return;
+function offerCard(){const o=offers[OFFER];if(!o||!st)return;
   if(st.paid&&st.plan==="vip"){add("team","You're already a VIP. Thank you! 🌹");return}
   const c=document.createElement("div");c.className="card";
   c.innerHTML=`<h3>🌹 ${esc(o.title)}: $${o.usd.toFixed(2)}</h3>${o.days} days of priority replies, longer conversations and Rose's best memory.<div class="plans"><button><span>Get VIP access</span><span>$${o.usd.toFixed(2)}</span></button></div><div class="note">Pay by card, Apple Pay or Google Pay. Payments are handled securely by Yoco and charged in South African rand at today's rate; your bank converts it. One-off payment, nothing renews. VIP unlocks in this chat, on this device. <a href="refunds.html">Refunds</a>.</div>`;
-  const x=c.querySelector("button");x.onclick=async()=>{x.disabled=true;x.lastChild.textContent="Opening…";const r=await api("checkout",{offer:OFFER});if(r.url)location.href=r.url;else{x.disabled=false;x.lastChild.textContent="$"+o.usd.toFixed(2);alertMsg(r.error||"Please try again.")}};
+  const x=c.querySelector("button");x.onclick=async()=>{if(!await ensureAdult())return;x.disabled=true;x.lastChild.textContent="Opening…";const r=await api("checkout",{offer:OFFER});if(r.url)location.href=r.url;else{x.disabled=false;x.lastChild.textContent="$"+o.usd.toFixed(2);alertMsg(r.error||"Please try again.")}};
   log.appendChild(c);log.scrollTop=log.scrollHeight}
 function alertMsg(s){add("team",s)}
 const pillsEl=document.getElementById("pills"),ageEl=document.getElementById("age"),ok18=document.getElementById("ok18");
 const PILLS=[["coffee spots","Let's talk coffee spots ☕"],["karaoke picks","Karaoke picks! What would you sing? 🎤"],["favourite hikes","Tell me about your favourite hikes ⛰️"],["long day","I've had a long day 😮‍💨"]];
-function show(s){st=s;vipUi(s);ageEl.hidden=!!s.adult;
+function show(s){st=s;vipUi(s);if(s.adult)ageEl.hidden=true;
   leftEl.textContent=!s.adult?"":s.paid?("Unlimited chat until "+new Date(s.paid_until*1000).toLocaleString([], {dateStyle:"medium",timeStyle:"short"})):(s.bonus>0?s.bonus+" extra messages left":(s.left+" free messages left today"))+" · AI companion"}
 function pills(on){pillsEl.innerHTML="";if(!on)return;PILLS.forEach(([l,msg])=>{const k=document.createElement("button");k.type="button";k.textContent=l;k.onclick=()=>{t.value=msg;send({preventDefault(){}})};pillsEl.appendChild(k)})}
 function fresh(on,greet){pills(on);if(on)add("assistant",greet||"Hi there, I'm Rose 🌹 Glad you found my little corner. Tell me your name and how your day's been?")}
 async function ensureAdult(){if(st&&st.adult)return true;
-  if(!ok18.checked){ageEl.classList.add("nudge");ok18.focus();return false}
+  if(!ok18.checked){ageEl.hidden=false;ageEl.classList.add("nudge");document.getElementById("bar").scrollIntoView({block:"center"});ok18.focus();add("team","Before paying, please tick the box below to confirm you're 18 or older.");return false}
   const r=await api("adult");show(r.state);offerCard();return true}
 ok18.onchange=()=>ageEl.classList.remove("nudge");
-async function send(e){e.preventDefault();const text=t.value.trim();if(!text)return;if(!await ensureAdult())return;
+async function send(e){e.preventDefault();const text=t.value.trim();if(!text)return;
   pills(false);
   t.value="";t.style.height="auto";add("user",text);b.disabled=true;const ty=add("assistant typing","Rose is typing…");
   try{const r=await api("send",{text});ty.remove();(r.messages||[]).forEach(m=>add(m.role,m.text,m.url));if(r.paywall)paywall();if(r.offer)memberCard("Loving our chat? 🌹");if(r.state)show(r.state);if(r.error==="slow down")add("team","One moment, then try again.")}
@@ -195,6 +196,6 @@ setInterval(async()=>{if(st&&st.paused){const r=await api("poll",{since:lastTs})
   if(!r.messages.length)fresh(true,r.welcome);else if(r.welcome)add("assistant",r.welcome);
   const q=new URLSearchParams(location.search);if(q.get("paid"))waitPaid();if(q.get("failed"))add("team","The payment didn't go through. Nothing was charged; you can try again any time.");
   if(q.has("paid")||q.has("failed"))history.replaceState(null,"","chat.html");else offerCard();
-  if(r.state.adult&&!r.state.paid&&r.state.left===0&&r.state.bonus===0)paywall()}
+  if(!r.state.paid&&r.state.left===0&&r.state.bonus===0)paywall()}
   catch(e){add("team","Rose can't connect right now. Please try again in a minute.")}})();
 </script></body></html>
