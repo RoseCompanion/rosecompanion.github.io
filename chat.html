@@ -74,6 +74,9 @@ a{color:var(--accent)}
 .vip .gate{margin-top:auto;text-align:center;font-size:12.5px;color:var(--muted)}
 .vip .gate button{background:#2aabee;color:#fff;border:0;border-radius:22px;font:700 14px Lato,sans-serif;padding:11px 18px;cursor:pointer;width:100%;margin-top:8px}
 footer{font-size:12px;color:var(--muted);text-align:center;margin-top:22px}
+.choice{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+.choice button{border:1px solid var(--accent2);background:#fff;color:var(--accent);border-radius:16px;padding:6px 12px;font:700 13.5px Lato,sans-serif;cursor:pointer}
+.choice button[data-c=vault]{background:var(--accent);color:#fff;border-color:var(--accent)}
 #lightbox{position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:9;padding:16px}
 #lightbox img{max-width:100%;max-height:90vh;border-radius:12px}
 @media (max-width:640px){.split{grid-template-columns:1fr}.top{display:none}.bio{gap:12px;padding:10px 0 12px}.bio img{width:72px;height:72px}.bio h1{font-size:21px}.bio .sub{font-size:12.5px}.bio p{font-size:13px;margin-top:4px}.status{font-size:12px}.card h2{padding:9px 14px}#log{height:max(170px,calc(100svh - 400px))}.pills{flex-wrap:nowrap;overflow-x:auto}.pills button{flex:none}}
@@ -92,8 +95,8 @@ footer{font-size:12px;color:var(--muted);text-align:center;margin-top:22px}
 <label class="age" id="age" hidden><input type="checkbox" id="ok18"> I'm 18 or older (required for payment) · Rose is an AI companion, friendly and never explicit</label><div class="left" id="left"></div></div>
 </section>
 <div class="split">
-<section class="card hot" id="albumbox"><h2>🔥 My private album <span class="cnt" id="albumcount"></span></h2><div class="bd">
-<div class="car" id="car"><button class="nav prev" aria-label="Previous photo">‹</button><button class="nav next" aria-label="Next photo">›</button><div class="cap" id="carcap"></div><div class="ov" id="carov"><span class="lockicon">🔒</span><b>Just for you…</b><span>Private photos I don't post anywhere else</span><button class="unl" type="button">Unlock my album</button></div></div>
+<section class="card hot" id="albumbox"><h2>🌹 My Rose Garden <span class="cnt" id="albumcount"></span></h2><div class="bd">
+<div class="car" id="car"><button class="nav prev" aria-label="Previous photo">‹</button><button class="nav next" aria-label="Next photo">›</button><div class="cap" id="carcap"></div><div class="ov" id="carov"><span class="lockicon">🔒</span><b>Just for you…</b><span>My private photo vault. I don't post these anywhere else</span><button class="unl" type="button">Enter my Rose Garden</button></div></div>
 <div class="dots" id="dots"></div>
 <div class="album-cta" id="albumcta">New photos every week · from $14.99 · <a href="#" id="unlock">see plans</a></div>
 </div></section>
@@ -117,7 +120,7 @@ function add(role,text,url){const d=document.createElement("div");d.className="m
 function lightbox(url){const b=document.createElement("div");b.id="lightbox";b.innerHTML=`<img src="${url}" alt="Photo from Rose">`;b.onclick=()=>b.remove();document.body.appendChild(b)}
 function memberCard(title,vipOnly){const old=document.querySelector(".card.member");if(old){if(!vipOnly)return;old.remove()}const c=document.createElement("div");c.className="card member";
   const pp=plans.filter(p=>vipOnly?p.key==="vip":(p.key==="month"||p.key==="vip"));
-  c.innerHTML=`<h3>${title}</h3>Members get unlimited chat, a daily photo from my day and my private album 🌹<div class="plans">${pp.map(p=>`<button data-k="${p.key}"><span>${esc(p.title)}</span><span>$${p.usd.toFixed(2)}</span></button>`).join("")}</div><div class="note">Pay by card, Apple Pay or Google Pay. Payments are handled securely by Yoco and charged in South African rand at today's rate; your bank converts it. One-off payment, nothing renews. <a href="refunds.html">Refunds</a>.</div>`;
+  c.innerHTML=`<h3>${title}</h3>Members get unlimited chat, a daily photo from my day and the key to my Rose Garden, my private photo vault 🌹<div class="plans">${pp.map(p=>`<button data-k="${p.key}"><span>${esc(p.title)}</span><span>$${p.usd.toFixed(2)}</span></button>`).join("")}</div><div class="note">Pay by card, Apple Pay or Google Pay. Payments are handled securely by Yoco and charged in South African rand at today's rate; your bank converts it. One-off payment, nothing renews. <a href="refunds.html">Refunds</a>.</div>`;
   c.querySelectorAll("button").forEach(x=>x.onclick=async()=>{if(!await ensureAdult())return;x.disabled=true;x.lastChild.textContent="Opening…";const r=await api("checkout",{plan:x.dataset.k});if(r.url)location.href=r.url;else{x.disabled=false;alertMsg(r.error||"Please try again.")}});
   log.appendChild(c);log.scrollTop=log.scrollHeight}
 let car=[],ci=0,carT=null;
@@ -149,11 +152,16 @@ function offerCard(){const o=offers[OFFER];if(!o||!st)return;
   log.appendChild(c);log.scrollTop=log.scrollHeight}
 function alertMsg(s){add("team",s)}
 const pillsEl=document.getElementById("pills"),ageEl=document.getElementById("age"),ok18=document.getElementById("ok18");
-const PILLS=[["Hi gorgeous 👋","Hi gorgeous 👋"],["Tell me about you","Tell me a bit about yourself 😊"],["Your private album? 🔥","Tell me about your private album 🔥"],["Long day…","I've had a long day 😮‍💨"]];
+const PILLS=[["Hi gorgeous 👋","Hi gorgeous 👋"],["Tell me about you","Tell me a bit about yourself 😊"],["Your Rose Garden? 🌹","Tell me about your Rose Garden 🌹"],["Long day…","I've had a long day 😮‍💨"]];
 function show(s){st=s;vipUi(s);if(s.adult)ageEl.hidden=true;
   leftEl.textContent=!s.adult?"":s.paid?("Unlimited chat until "+new Date(s.paid_until*1000).toLocaleString([], {dateStyle:"medium",timeStyle:"short"})):(s.bonus>0?s.bonus+" extra messages left":(s.left+" free messages left today"))+" · AI companion"}
 function pills(on){pillsEl.innerHTML="";if(!on)return;PILLS.forEach(([l,msg])=>{const k=document.createElement("button");k.type="button";k.textContent=l;k.onclick=()=>{t.value=msg;send({preventDefault(){}})};pillsEl.appendChild(k)})}
-function fresh(on,greet){pills(on);if(on)add("assistant",greet||"Hi there, I'm Rose 🌹 Glad you found my little corner. Tell me your name and how your day's been?")}
+function fresh(on,greet){pills(on);if(!on)return;if(greet)return add("assistant",greet);
+  const d=document.createElement("div");d.className="m assistant";
+  d.innerHTML='Hi there, I\'m Rose 🌹 Glad you found my corner. Do you want to chat with me personally, or do you want <b>access to my private photo vault</b> (my Rose Garden)?<div class="choice"><button type="button" data-c="chat">💬 Chat with you</button><button type="button" data-c="vault">🌹 My Rose Garden</button></div>';
+  d.querySelector('[data-c=chat]').onclick=()=>{d.querySelector(".choice").remove();t.value="I'd love to chat with you personally 😊";send({preventDefault(){}})};
+  d.querySelector('[data-c=vault]').onclick=()=>{d.querySelector(".choice").remove();memberCard("Welcome to my Rose Garden 🌹");document.getElementById("albumbox").scrollIntoView({block:"nearest"})};
+  log.appendChild(d)}
 async function ensureAdult(){if(st&&st.adult)return true;
   if(!ok18.checked){ageEl.hidden=false;ageEl.classList.add("nudge");document.getElementById("bar").scrollIntoView({block:"center"});ok18.focus();add("team","Before paying, please tick the box below to confirm you're 18 or older.");return false}
   const r=await api("adult");show(r.state);offerCard();return true}
