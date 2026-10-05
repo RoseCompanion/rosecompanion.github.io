@@ -47,7 +47,7 @@ what matters to you ❤️</p>
 
 <section><h2>How it works</h2><ol class="steps">
 <li><strong>Tap "Chat with Rose".</strong> The chat opens right here in your browser, on any phone or computer. (Rose is on Telegram too.)</li>
-<li><strong>Confirm you're 18 or older</strong> and say hello. Your first 10 messages each day cost nothing.</li>
+<li><strong>Confirm you're 18 or older</strong> and say hello. Your first 5 messages each day cost nothing.</li>
 <li><strong>Want more time together?</strong> Choose a plan inside the chat and pay by card, Apple Pay or Google Pay (or Telegram Stars on Telegram).</li>
 </ol></section>
 
@@ -56,7 +56,7 @@ as happy hearing about your week. These pictures are AI-generated illustrations 
 <div class="gallery">{gallery}</div></section>
 
 <section><h2>Prices</h2><table class="prices"><thead><tr><th>Plan</th><th>By card</th><th>Telegram Stars</th></tr></thead>
-<tbody><tr><td>10 messages every day</td><td>Free</td><td>Free</td></tr>{prices}</tbody></table>
+<tbody><tr><td>5 messages every day</td><td>Free</td><td>Free</td></tr>{prices}</tbody></table>
 <p class="small">Card payments are processed securely by Yoco, a South African payment provider, and charged in South
 African rand at the day's exchange rate (shown before you pay); your bank converts it to your currency. Plans are
 one-off payments, not subscriptions: nothing renews automatically. See <a href="refunds.html">refunds</a>.</p></section>
@@ -87,7 +87,7 @@ may pause or end access for accounts that misuse the service. Rose never offers 
 outside the chat.</p>
 <h2>4. Not professional advice</h2><p>Rose gives friendly, general conversation only. It is not therapy, medical, legal or
 financial advice. In an emergency, contact local emergency services.</p>
-<h2>5. Plans and payment</h2><p>10 messages a day are free. Paid plans unlock extra messages or unlimited chat for the
+<h2>5. Plans and payment</h2><p>5 messages a day are free. Paid plans unlock extra messages or unlimited chat for the
 stated time (20 messages, 24 hours, or 30 days). Prices are shown in US dollars; card payments are processed by Yoco
 and charged in South African rand at the exchange rate shown before you pay. Telegram Stars payments are processed by
 Telegram. Plans are one-off purchases and do not renew automatically.</p>
