@@ -1,88 +1,88 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,interactive-widget=resizes-content">
-<title>Chat with Rose</title><meta name="description" content="Chat with Rose, a warm and witty AI companion. Right here in your browser, nothing to install. Adults 18+.">
-<meta property="og:title" content="Chat with Rose"><meta property="og:description" content="A warm, witty AI companion for good conversation. Nothing to install. 18+.">
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rose · Private messages</title><meta name="description" content="Rose's little corner of the internet. Coffee, mountains, karaoke and good conversation. Adults 18+.">
+<meta property="og:title" content="Rose"><meta property="og:description" content="Coffee, mountains, karaoke and good conversation. Come say hi. 18+.">
 <meta property="og:image" content="https://rosecompanion.github.io/img/hero.jpg">
-<link rel="icon" href="img/hero.jpg"><link rel="stylesheet" href="style.css">
+<link rel="icon" href="img/hero.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
 <style>
-.chatwrap{height:100vh;height:100dvh;display:flex;flex-direction:column}
-.diary-link{font:600 14px system-ui,sans-serif;color:var(--rose)!important;text-decoration:none;white-space:nowrap}
-.corner{max-width:760px;margin:0 auto;padding:28px 16px 40px;font:17px/1.6 system-ui,sans-serif}
-.corner .bio{display:flex;gap:18px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:18px}
-.corner .bio img{width:96px;height:96px;border-radius:50%;object-fit:cover;flex:none}
-.corner h2{font:bold 26px Georgia,serif;margin:0 0 4px}
-.corner .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.corner .tags span{background:var(--rose-soft);border-radius:999px;padding:3px 10px;font-size:14px}
-.post{background:var(--card);border:1px solid var(--line);border-radius:22px;margin:18px 0;overflow:hidden}
-.post img{width:100%;aspect-ratio:1;object-fit:cover;display:block}
-.post .txt{padding:14px 18px 16px}.post .when{font-size:13px;color:var(--muted)}
-.post .reply{display:inline-block;margin-top:8px;font:600 15px system-ui,sans-serif;color:var(--rose);text-decoration:none}
-.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:16px}
-.tile{display:block;text-decoration:none;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
-.tile img{width:100%;aspect-ratio:1;object-fit:cover;display:block}
-.tile span{display:block;padding:7px 9px 9px;font:14px/1.35 system-ui,sans-serif}
-@media (max-width:620px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.corner .fine{font-size:13px;color:var(--muted);text-align:center;margin-top:24px}
-@media (max-width:520px){.corner .bio{flex-direction:column;text-align:center}.corner .tags{justify-content:center}}
-.chat-top{display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid var(--line);background:var(--card)}
-.chat-top img{width:44px;height:44px;border-radius:50%;object-fit:cover}
-.chat-top .who{flex:1;font:15px/1.3 system-ui,sans-serif}.chat-top .who b{font:bold 19px Georgia,serif;display:block}
-.chat-top a{font:14px system-ui,sans-serif;color:var(--muted)}
-#log{flex:1;overflow-y:auto;padding:16px;max-width:760px;width:100%;margin:0 auto;font:17px/1.5 system-ui,sans-serif}
-.m{max-width:82%;padding:10px 14px;border-radius:18px;margin:6px 0;white-space:pre-wrap;word-wrap:break-word}
-.assistant{background:var(--card);border:1px solid var(--line);border-bottom-left-radius:6px}
-.user{background:var(--rose);color:#fff;margin-left:auto;border-bottom-right-radius:6px}
-.team{background:var(--rose-soft);font-size:15px;margin:10px auto;text-align:center}
-.typing{color:var(--muted);font-style:italic;font-size:15px}
-#bar{border-top:1px solid var(--line);background:var(--card);padding:10px 12px}
-#bar form{display:flex;gap:8px;max-width:760px;margin:auto}
-#bar textarea{flex:1;resize:none;font:17px system-ui,sans-serif;padding:10px 14px;border-radius:22px;border:1px solid var(--line);background:var(--bg);color:var(--ink);max-height:140px}
-#bar button,.card button,.gate button{background:var(--rose);color:#fff;border:0;border-radius:999px;font:600 17px system-ui,sans-serif;padding:10px 18px;cursor:pointer}
-#bar button:disabled{opacity:.5}
-.left{font:13px system-ui,sans-serif;color:var(--muted);text-align:center;margin-top:6px}
-.card,.gate{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin:12px 0;font:16px/1.5 system-ui,sans-serif}
-.card h3,.gate h3{margin:0 0 6px;font:bold 20px Georgia,serif}
-.plans{display:grid;gap:8px;margin-top:10px}
-.plans button{display:flex;justify-content:space-between;width:100%;text-align:left}
-.note{font-size:13px;color:var(--muted);margin-top:8px}
-.gate input{font:17px system-ui,sans-serif;padding:10px 14px;border-radius:12px;border:1px solid var(--line);width:100%;margin:8px 0;background:var(--bg);color:var(--ink)}
-.gate .row{display:flex;gap:8px;flex-wrap:wrap}
-.chips{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 12px}.chips button{background:var(--card);color:var(--ink);border:1px solid var(--rose);border-radius:999px;font:16px system-ui,sans-serif;padding:9px 14px;cursor:pointer}.gate .no{background:transparent;color:var(--muted);border:1px solid var(--line)}
-
-.chatwrap{position:relative}
-#bar textarea:focus{outline:none;border-color:var(--rose);box-shadow:0 0 0 3px var(--rose-soft)}
-.chatwrap.fresh #log{flex:0 0 auto;margin-top:auto;overflow:visible}
-.chatwrap.fresh #bar{margin-bottom:auto;border-top:0;background:transparent;padding-bottom:6vh}
-.chatwrap.fresh #bar textarea{font-size:19px;padding:14px 20px;border-color:var(--rose);box-shadow:0 0 0 4px var(--rose-soft)}
-.chatwrap.fresh .m.assistant{margin:6px auto;text-align:center;max-width:540px;border-radius:18px}
-.heroimg{width:112px;height:112px;border-radius:50%;object-fit:cover;display:block;margin:0 auto 8px;border:3px solid var(--rose)}
-.pills{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;max-width:760px;margin:0 auto 10px}
-.pills button{background:var(--card);color:var(--ink);border:1px solid var(--rose);border-radius:999px;font:15px system-ui,sans-serif;padding:7px 13px;cursor:pointer}
-.pills button:hover{background:var(--rose-soft)}
-.age{display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap;font:13px system-ui,sans-serif;color:var(--muted);margin-top:8px;border-radius:10px;padding:4px 8px}
-.age input{width:18px;height:18px;accent-color:var(--rose)}
-.age.nudge{color:var(--ink);background:var(--rose-soft);font-weight:600}
-.drawer{max-height:62vh;overflow-y:auto;border-bottom:1px solid var(--line);background:var(--bg)}
-.drawer .corner{padding:16px 16px 20px}
+:root{--bg:#17121a;--panel:#211a24;--panel2:#2a2130;--line:#3a2f40;--ink:#efe6dc;--muted:#a8998f;--accent:#c9a27e;--rose:#b4566e}
+:root[data-theme="light"]{--bg:#efe9e3;--panel:#fbf8f4;--panel2:#f3ece4;--line:#ddd2c6;--ink:#2a1f22;--muted:#7a6b62;--accent:#8a5a3b;--rose:#9e3d58}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 Lato,system-ui,sans-serif}
+a{color:var(--accent)}
+.top{background:var(--panel);border-bottom:1px solid var(--line)}
+.top .in{max-width:980px;margin:auto;padding:8px 16px;display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted)}
+.top b{font:700 16px "Libre Baskerville",Georgia,serif;color:var(--ink);letter-spacing:.3px}
+.page{max-width:980px;margin:0 auto 40px;padding:0 16px}
+.cover{height:220px;background:url(img/cover.jpg) center/cover;border:1px solid var(--line);border-top:0}
+.head{display:flex;gap:18px;align-items:flex-end;margin:-70px 0 18px 22px}
+.head img{width:150px;height:150px;object-fit:cover;border:4px solid var(--panel);background:var(--panel);flex:none}
+.head h1{font:700 30px "Libre Baskerville",Georgia,serif;margin:0}
+.head .sub{color:var(--muted);font-size:14px}
+.status{font-size:13px;color:var(--muted);margin-top:2px}.status i{display:inline-block;width:8px;height:8px;border-radius:50%;background:#6f9e6a;margin-right:6px;font-style:normal}
+.cols{display:grid;grid-template-columns:280px minmax(0,1fr);gap:18px;align-items:start}
+.box{background:var(--panel);border:1px solid var(--line);margin-bottom:16px}
+.box h2{font:700 13px Lato,sans-serif;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);margin:0;padding:10px 14px;border-bottom:1px solid var(--line);background:var(--panel2)}
+.box .bd{padding:12px 14px}
+.facts{margin:0;font-size:14px}.facts dt{color:var(--muted);float:left;width:92px;clear:left}.facts dd{margin:0 0 6px 92px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.tile{display:block;text-decoration:none;color:var(--ink);font-size:12.5px;line-height:1.35}
+.tile img{width:100%;aspect-ratio:1;object-fit:cover;display:block;border:1px solid var(--line);margin-bottom:4px}
+.fine{font-size:12px;color:var(--muted)}
+#chat .bd{padding:0}
+.lock{font-size:12.5px;color:var(--muted);padding:8px 14px;border-bottom:1px solid var(--line)}
+#log{height:min(56vh,520px);overflow-y:auto;padding:14px}
+.m{max-width:80%;padding:9px 12px;margin:6px 0;white-space:pre-wrap;word-wrap:break-word;border:1px solid var(--line);font-size:15px}
+.assistant{background:var(--panel2)}
+.user{background:transparent;border-color:var(--accent);margin-left:auto}
+.team{background:transparent;border-style:dashed;color:var(--muted);font-size:13.5px;margin:10px auto;text-align:center;max-width:90%}
+.typing{color:var(--muted);font-style:italic;font-size:13.5px}
+#bar{border-top:1px solid var(--line);padding:10px 12px;background:var(--panel)}
+.pills{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;margin:0 2px 8px}
+.pills button{background:none;border:0;padding:0;color:var(--accent);font:13px Lato,sans-serif;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+#f{display:flex;gap:8px}
+#t{flex:1;resize:none;font:15px Lato,sans-serif;padding:9px 11px;border:1px solid var(--line);background:var(--bg);color:var(--ink);max-height:140px}
+#t:focus{outline:none;border-color:var(--accent)}
+#b,.card button{background:var(--accent);color:#1b1410;border:0;font:700 14px Lato,sans-serif;padding:9px 18px;cursor:pointer}
+#b:disabled{opacity:.5}
+.age{display:flex;gap:7px;align-items:center;flex-wrap:wrap;font-size:12.5px;color:var(--muted);margin-top:8px}
+.age input{accent-color:var(--accent)}
+.age.nudge{color:var(--ink);font-weight:700}
+.left{font-size:12px;color:var(--muted);margin-top:6px}
+.card{border:1px solid var(--accent);background:var(--panel2);padding:12px 14px;margin:12px 0;font-size:14px}
+.card h3{margin:0 0 4px;font:700 17px "Libre Baskerville",Georgia,serif}
+.plans{display:grid;gap:6px;margin-top:10px}.plans button{display:flex;justify-content:space-between;width:100%;text-align:left}
+.note{font-size:12px;color:var(--muted);margin-top:8px}
+footer{max-width:980px;margin:0 auto;padding:0 16px 30px;font-size:12px;color:var(--muted)}
+@media (max-width:760px){.cols{grid-template-columns:1fr}.side{order:2}.cover{height:140px}.head{margin:-48px 0 14px 12px;gap:12px}.head img{width:96px;height:96px}.head h1{font-size:24px}#log{height:52vh}}
 </style></head>
 <body>
-<div class="chatwrap" id="wrap">
-<div class="chat-top"><img src="img/hero.jpg" alt="Rose"><div class="who"><b>Rose</b>28 · coffee, mountains &amp; karaoke · usually replies in seconds</div><a class="diary-link" href="#" id="dl" aria-expanded="false">📸 Rose's corner</a></div>
-<div class="drawer" id="drawer" hidden><section class="corner" aria-label="Rose's corner">
-<div class="bio"><img src="img/hero.jpg" alt="Rose"><div><h2>Rose's corner 🌹</h2>
-Hi, I'm Rose. I'm happiest with a good coffee in my hand and a good story in my ear. I hike whenever I can, sing karaoke badly but with great confidence, and I'll never say no to a fairground.
-<div class="tags"><span>☕ coffee</span><span>⛰️ hiking</span><span>🎤 karaoke</span><span>🏐 beach days</span><span>🎶 festivals</span><span>⛷️ ski trips</span></div></div></div>
-<div class="grid">
-<a class="tile" href="#" data-say="If I'd been at the top with you, I'd have…"><img src="img/diary/summit.jpg" alt="Rose at a mountain summit" loading="lazy"><span>Sunrise at the top. Would've been better with company 😉</span></a>
-<a class="tile" href="#" data-say="I'd share that croissant if…"><img src="img/diary/cafe.jpg" alt="Rose with a croissant at a café" loading="lazy"><span>Croissant for one… but I'd share 🥐</span></a>
-<a class="tile" href="#" data-say="For our duet I'd pick…"><img src="img/diary/karaoke.jpg" alt="Rose singing karaoke" loading="lazy"><span>Pick a duet. I'll take the high notes 🎤</span></a>
-<a class="tile" href="#" data-say="Challenge accepted, Rose. Back in my day I…"><img src="img/diary/volleyball.jpg" alt="Rose playing beach volleyball" loading="lazy"><span>I dive for every ball. Think you could keep up? 🏐</span></a>
-</div>
-<p class="fine">Rose is an AI companion · these photos are illustrations of her world · <a href="./">about</a> · <a href="terms.html">terms</a> · <a href="privacy.html">privacy</a></p>
-</section></div>
+<div class="top"><div class="in"><b>Rose</b><span>🔒 private messages</span></div></div>
+<div class="page">
+<div class="cover" role="img" aria-label="The sea from a boat deck"></div>
+<div class="head"><img src="img/hero.jpg" alt="Rose"><div><h1>Rose</h1><div class="sub">28 · coffee, mountains &amp; karaoke</div><div class="status"><i></i>Online now · usually replies in seconds</div></div></div>
+<div class="cols">
+<aside class="side">
+<div class="box"><h2>About me</h2><div class="bd">I'm happiest with a good coffee in my hand and a good story in my ear. I hike whenever I can, sing karaoke badly but with great confidence, and I'll never say no to a fairground. Pull up a chair.</div></div>
+<div class="box"><h2>Details</h2><div class="bd"><dl class="facts"><dt>Age</dt><dd>28</dd><dt>Loves</dt><dd>coffee, hiking, karaoke, beach days, festivals</dd><dt>Looking for</dt><dd>good conversation</dd><dt>Mood</dt><dd>sunshine ☀️</dd></dl></div></div>
+<div class="box"><h2>Photos</h2><div class="bd"><div class="grid">
+<a class="tile" href="#" data-say="If I'd been at the top with you, I'd have…"><img src="img/diary/summit.jpg" alt="Rose at a mountain summit" loading="lazy">Sunrise at the top. Would've been better with company 😉</a>
+<a class="tile" href="#" data-say="I'd share that croissant if…"><img src="img/diary/cafe.jpg" alt="Rose with a croissant at a café" loading="lazy">Croissant for one… but I'd share 🥐</a>
+<a class="tile" href="#" data-say="For our duet I'd pick…"><img src="img/diary/karaoke.jpg" alt="Rose singing karaoke" loading="lazy">Pick a duet. I'll take the high notes 🎤</a>
+<a class="tile" href="#" data-say="Challenge accepted, Rose. Back in my day I…"><img src="img/diary/volleyball.jpg" alt="Rose playing beach volleyball" loading="lazy">I dive for every ball. Keep up? 🏐</a>
+</div></div></div>
+<p class="fine">Rose is an AI companion · photos are illustrations of her world · <a href="terms.html">terms</a> · <a href="privacy.html">privacy</a> · <a href="refunds.html">refunds</a></p>
+</aside>
+<main>
+<section class="box" id="chat"><h2>🔒 Private messages</h2><div class="bd">
+<div class="lock">Just you and Rose. Conversations are private and never shared.</div>
 <div id="log" aria-live="polite"></div>
-<div id="bar"><div class="pills" id="pills"></div><form id="f"><textarea id="t" rows="1" placeholder="Say hi to Rose…" aria-label="Message"></textarea><button id="b">Send</button></form>
-<label class="age" id="age"><input type="checkbox" id="ok18"> I'm 18 or older · Rose is an AI companion, friendly and never explicit · <a href="terms.html">terms</a></label><div class="left" id="left"></div></div>
-</div>
+<div id="bar"><div class="pills" id="pills"></div><form id="f"><textarea id="t" rows="1" placeholder="Write to Rose…" aria-label="Message"></textarea><button id="b">Send</button></form>
+<label class="age" id="age"><input type="checkbox" id="ok18"> I'm 18 or older · Rose is an AI companion, friendly and never explicit</label><div class="left" id="left"></div></div>
+</div></section>
+</main>
+</div></div>
 <script>
 const API="https://chat.sonneblomdigitaal.co.za/api/";
 const log=document.getElementById("log"),t=document.getElementById("t"),b=document.getElementById("b"),leftEl=document.getElementById("left");
@@ -103,19 +103,18 @@ function offerCard(){const o=offers[OFFER];if(!o||!st||!st.adult)return;
   const x=c.querySelector("button");x.onclick=async()=>{x.disabled=true;x.lastChild.textContent="Opening…";const r=await api("checkout",{offer:OFFER});if(r.url)location.href=r.url;else{x.disabled=false;x.lastChild.textContent="$"+o.usd.toFixed(2);alertMsg(r.error||"Please try again.")}};
   log.appendChild(c);log.scrollTop=log.scrollHeight}
 function alertMsg(s){add("team",s)}
-const wrap=document.getElementById("wrap"),pillsEl=document.getElementById("pills"),ageEl=document.getElementById("age"),ok18=document.getElementById("ok18"),drawer=document.getElementById("drawer"),dl=document.getElementById("dl");
-const PILLS=[["☕ Coffee spots","Let's talk coffee spots ☕"],["🎤 Karaoke picks","Karaoke picks! What would you sing? 🎤"],["⛰️ Favourite hikes","Tell me about your favourite hikes ⛰️"],["😮‍💨 Long day","I've had a long day 😮‍💨"]];
+const pillsEl=document.getElementById("pills"),ageEl=document.getElementById("age"),ok18=document.getElementById("ok18");
+const PILLS=[["coffee spots","Let's talk coffee spots ☕"],["karaoke picks","Karaoke picks! What would you sing? 🎤"],["favourite hikes","Tell me about your favourite hikes ⛰️"],["long day","I've had a long day 😮‍💨"]];
 function show(s){st=s;ageEl.hidden=!!s.adult;
   leftEl.textContent=!s.adult?"":s.paid?("Unlimited chat until "+new Date(s.paid_until*1000).toLocaleString([], {dateStyle:"medium",timeStyle:"short"})):(s.bonus>0?s.bonus+" extra messages left":(s.left+" of 10 daily messages left"))+" · AI companion"}
 function pills(on){pillsEl.innerHTML="";if(!on)return;PILLS.forEach(([l,msg])=>{const k=document.createElement("button");k.type="button";k.textContent=l;k.onclick=()=>{t.value=msg;send({preventDefault(){}})};pillsEl.appendChild(k)})}
-function fresh(on,greet){wrap.classList.toggle("fresh",on);pills(on);if(on){const i=document.createElement("img");i.className="heroimg";i.src="img/hero.jpg";i.alt="Rose";log.appendChild(i);add("assistant",greet||"Hi there, I'm Rose 🌹 Honestly, a good chat is my favourite thing. Tell me your name and how your day's been?")}}
+function fresh(on,greet){pills(on);if(on)add("assistant",greet||"Hi there, I'm Rose 🌹 Glad you found my little corner. Tell me your name and how your day's been?")}
 async function ensureAdult(){if(st&&st.adult)return true;
-  if(!ok18.checked){ageEl.classList.add("nudge");ageEl.animate([{transform:"scale(1)"},{transform:"scale(1.05)"},{transform:"scale(1)"}],{duration:500,iterations:2});ok18.focus();return false}
+  if(!ok18.checked){ageEl.classList.add("nudge");ok18.focus();return false}
   const r=await api("adult");show(r.state);offerCard();return true}
 ok18.onchange=()=>ageEl.classList.remove("nudge");
-dl.onclick=e=>{e.preventDefault();drawer.hidden=!drawer.hidden;dl.setAttribute("aria-expanded",String(!drawer.hidden))};
 async function send(e){e.preventDefault();const text=t.value.trim();if(!text)return;if(!await ensureAdult())return;
-  if(wrap.classList.contains("fresh")){wrap.classList.remove("fresh");pills(false);const h=log.querySelector(".heroimg");if(h)h.remove()}
+  pills(false);
   t.value="";t.style.height="auto";add("user",text);b.disabled=true;const ty=add("assistant typing","Rose is typing…");
   try{const r=await api("send",{text});ty.remove();(r.messages||[]).forEach(m=>add(m.role,m.text));if(r.paywall)paywall();if(r.state)show(r.state);if(r.error==="slow down")add("team","One moment, then try again.")}
   catch(err){ty.remove();add("team","Connection hiccup. Please try again.")}
@@ -123,7 +122,7 @@ async function send(e){e.preventDefault();const text=t.value.trim();if(!text)ret
 document.getElementById("f").onsubmit=send;
 t.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();send(e)}});
 t.addEventListener("input",()=>{t.style.height="auto";t.style.height=Math.min(t.scrollHeight,140)+"px"});
-document.querySelectorAll(".tile").forEach(a=>a.onclick=e=>{e.preventDefault();drawer.hidden=true;dl.setAttribute("aria-expanded","false");t.value=a.dataset.say+" ";t.focus();t.setSelectionRange(t.value.length,t.value.length)});
+document.querySelectorAll(".tile").forEach(a=>a.onclick=e=>{e.preventDefault();document.getElementById("chat").scrollIntoView({block:"start"});t.value=a.dataset.say+" ";t.focus();t.setSelectionRange(t.value.length,t.value.length)});
 async function waitPaid(){const w=add("team","Thank you! Confirming your payment…");for(let i=0;i<40;i++){const r=await api("poll");if(r.state&&(r.state.paid||r.state.bonus>0)){w.textContent="Payment received, thank you! You're all set. Now, where were we? 🌹";show(r.state);return}await new Promise(z=>setTimeout(z,3000))}w.textContent="Still waiting for the payment to confirm. If you were charged, it will unlock shortly; or ask for help by typing a message starting with Support:"}
 setInterval(async()=>{if(st&&st.paused){const r=await api("poll",{since:lastTs});(r.messages||[]).filter(m=>m.role==="team"&&m.ts>lastTs).forEach(m=>{add("team",m.text);lastTs=m.ts});show(r.state)}},20000);
 (async()=>{try{const r=await api("session",CODE?{c:CODE}:{});token=r.token;try{localStorage.setItem("rose_token",token)}catch(e){}plans=r.plans;offers=r.offers||{};
