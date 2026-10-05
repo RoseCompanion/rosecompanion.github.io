@@ -29,7 +29,8 @@ body{display:flex;flex-direction:column}
 .plans button{display:flex;justify-content:space-between;width:100%;text-align:left}
 .note{font-size:13px;color:var(--muted);margin-top:8px}
 .gate input{font:17px system-ui,sans-serif;padding:10px 14px;border-radius:12px;border:1px solid var(--line);width:100%;margin:8px 0;background:var(--bg);color:var(--ink)}
-.gate .row{display:flex;gap:8px;flex-wrap:wrap}.gate .no{background:transparent;color:var(--muted);border:1px solid var(--line)}
+.gate .row{display:flex;gap:8px;flex-wrap:wrap}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 12px}.chips button{background:var(--card);color:var(--ink);border:1px solid var(--rose);border-radius:999px;font:16px system-ui,sans-serif;padding:9px 14px;cursor:pointer}.gate .no{background:transparent;color:var(--muted);border:1px solid var(--line)}
 </style></head>
 <body>
 <div class="chat-top"><img src="img/hero.jpg" alt="Rose"><div class="who"><b>Rose</b>28 · coffee, mountains &amp; karaoke · usually replies in seconds</div><a href="./">About</a></div>
@@ -38,23 +39,34 @@ body{display:flex;flex-direction:column}
 <script>
 const API="https://chat.sonneblomdigitaal.co.za/api/";
 const log=document.getElementById("log"),t=document.getElementById("t"),b=document.getElementById("b"),leftEl=document.getElementById("left");
-let token=null,st=null,plans=[],lastTs=0;
+let token=null,st=null,plans=[],offers={},lastTs=0;
+const OFFER=new URLSearchParams(location.search).get("offer"),CODE=new URLSearchParams(location.search).get("c");
 try{token=localStorage.getItem("rose_token")}catch(e){}
 async function api(p,d={}){const r=await fetch(API+p,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({token,...d})});return r.json()}
 function esc(s){const d=document.createElement("div");d.textContent=s;return d.innerHTML}
 function add(role,text){const d=document.createElement("div");d.className="m "+role;d.innerHTML=esc(text);log.appendChild(d);log.scrollTop=log.scrollHeight;return d}
 function show(s){st=s;const ok=s.adult;t.disabled=b.disabled=!ok;
   leftEl.textContent=!ok?"":s.paid?("Unlimited chat until "+new Date(s.paid_until*1000).toLocaleString([], {dateStyle:"medium",timeStyle:"short"})):(s.bonus>0?s.bonus+" extra messages left":(s.left+" of 10 daily messages left"))+" · AI companion"}
-function gate(){add("assistant","Hi there, I'm Rose 🌹 Honestly, a good chat is my favourite thing. Tell me your name and how your day's been?");
+function gate(w){add("assistant",w||"Hi there, I'm Rose 🌹 Honestly, a good chat is my favourite thing. Tell me your name and how your day's been?");
   const g=document.createElement("div");g.className="gate";g.innerHTML=`<button id="yes" style="width:100%;font-size:19px;padding:14px">I'm 18 or older · Start chatting</button><div class="note" style="text-align:center">Rose is an AI companion · friendly, never explicit · By chatting you accept the <a href="terms.html">terms</a> · <a href="#" id="no">I'm under 18</a></div>`;log.appendChild(g);log.scrollTop=log.scrollHeight;
-  g.querySelector("#yes").onclick=async()=>{const r=await api("adult");g.remove();show(r.state);t.focus()};
+  g.querySelector("#yes").onclick=async()=>{const r=await api("adult");g.remove();show(r.state);hello();offerCard()};
   g.querySelector("#no").onclick=e=>{e.preventDefault();g.innerHTML="Thanks for being honest. This chat is only for adults, so I can't talk here. Take care!"}}
+function chips(){if(document.querySelector(".chips"))return;const c=document.createElement("div");c.className="chips";
+  ["Hi Rose! 👋","I've had a long day","Tell me about yourself"].forEach(x=>{const k=document.createElement("button");k.type="button";k.textContent=x;
+    k.onclick=()=>{c.remove();t.value=x;send({preventDefault(){}})};c.appendChild(k)});log.appendChild(c);log.scrollTop=log.scrollHeight}
+function hello(){const ty=add("assistant typing","Rose is typing…");setTimeout(()=>{ty.remove();add("assistant","Lovely, I'm so glad you're here! 🌹 Just type below, or tap one of these to get us started:");chips();t.focus()},1200)}
 function paywall(){if(document.querySelector(".card"))return;const c=document.createElement("div");c.className="card";
   c.innerHTML=`<h3>That's your 10 messages for today</h3>They reset tomorrow, or keep chatting now:<div class="plans">${plans.map(p=>`<button data-k="${p.key}"><span>${esc(p.title)}</span><span>$${p.usd.toFixed(2)}</span></button>`).join("")}</div><div class="note">Pay by card, Apple Pay or Google Pay. Payments are handled securely by Yoco and charged in South African rand at today's rate; your bank converts it. One-off payment, nothing renews. <a href="refunds.html">Refunds</a>.</div>`;
   c.querySelectorAll("button").forEach(x=>x.onclick=async()=>{x.disabled=true;x.lastChild.textContent="Opening…";const r=await api("checkout",{plan:x.dataset.k});if(r.url)location.href=r.url;else{x.disabled=false;alertMsg(r.error||"Please try again.")}});
   log.appendChild(c);log.scrollTop=log.scrollHeight}
+function offerCard(){const o=offers[OFFER];if(!o||!st||!st.adult)return;
+  if(st.paid&&st.plan==="vip"){add("team","You're already a VIP. Thank you! 🌹");return}
+  const c=document.createElement("div");c.className="card";
+  c.innerHTML=`<h3>🌹 ${esc(o.title)}: $${o.usd.toFixed(2)}</h3>${o.days} days of priority replies, longer conversations and Rose's best memory.<div class="plans"><button><span>Get VIP access</span><span>$${o.usd.toFixed(2)}</span></button></div><div class="note">Pay by card, Apple Pay or Google Pay. Payments are handled securely by Yoco and charged in South African rand at today's rate; your bank converts it. One-off payment, nothing renews. VIP unlocks in this chat, on this device. <a href="refunds.html">Refunds</a>.</div>`;
+  const x=c.querySelector("button");x.onclick=async()=>{x.disabled=true;x.lastChild.textContent="Opening…";const r=await api("checkout",{offer:OFFER});if(r.url)location.href=r.url;else{x.disabled=false;x.lastChild.textContent="$"+o.usd.toFixed(2);alertMsg(r.error||"Please try again.")}};
+  log.appendChild(c);log.scrollTop=log.scrollHeight}
 function alertMsg(s){add("team",s)}
-async function send(e){e.preventDefault();const text=t.value.trim();if(!text)return;t.value="";add("user",text);b.disabled=true;const ty=add("assistant typing","Rose is typing…");
+async function send(e){e.preventDefault();const text=t.value.trim();if(!text)return;document.querySelectorAll(".chips").forEach(c=>c.remove());t.value="";add("user",text);b.disabled=true;const ty=add("assistant typing","Rose is typing…");
   try{const r=await api("send",{text});ty.remove();(r.messages||[]).forEach(m=>add(m.role,m.text));if(r.paywall)paywall();if(r.state)show(r.state);if(r.error==="slow down")add("team","One moment, then try again.")}
   catch(err){ty.remove();add("team","Connection hiccup. Please try again.")}
   b.disabled=!st||!st.adult;t.focus()}
@@ -63,10 +75,10 @@ t.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefau
 t.addEventListener("input",()=>{t.style.height="auto";t.style.height=Math.min(t.scrollHeight,140)+"px"});
 async function waitPaid(){const w=add("team","Thank you! Confirming your payment…");for(let i=0;i<40;i++){const r=await api("poll");if(r.state&&(r.state.paid||r.state.bonus>0)){w.textContent="Payment received, thank you! You're all set. Now, where were we? 🌹";show(r.state);return}await new Promise(z=>setTimeout(z,3000))}w.textContent="Still waiting for the payment to confirm. If you were charged, it will unlock shortly; or ask for help by typing a message starting with Support:"}
 setInterval(async()=>{if(st&&st.paused){const r=await api("poll",{since:lastTs});(r.messages||[]).filter(m=>m.role==="team"&&m.ts>lastTs).forEach(m=>{add("team",m.text);lastTs=m.ts});show(r.state)}},20000);
-(async()=>{try{const r=await api("session");token=r.token;try{localStorage.setItem("rose_token",token)}catch(e){}plans=r.plans;
-  r.messages.forEach(m=>{add(m.role,m.text);lastTs=Math.max(lastTs,m.ts)});show(r.state);if(!r.state.adult)gate();
+(async()=>{try{const r=await api("session",CODE?{c:CODE}:{});token=r.token;try{localStorage.setItem("rose_token",token)}catch(e){}plans=r.plans;offers=r.offers||{};
+  r.messages.forEach(m=>{add(m.role,m.text);lastTs=Math.max(lastTs,m.ts)});show(r.state);if(!r.state.adult)gate(r.welcome);else if(r.welcome)add("assistant",r.welcome);if(r.state.adult&&!r.messages.length&&!r.welcome)chips();
   const q=new URLSearchParams(location.search);if(q.get("paid"))waitPaid();if(q.get("failed"))add("team","The payment didn't go through. Nothing was charged; you can try again any time.");
-  if(q.has("paid")||q.has("failed"))history.replaceState(null,"","chat.html");
+  if(q.has("paid")||q.has("failed"))history.replaceState(null,"","chat.html");else offerCard();
   if(r.state.adult&&!r.state.paid&&r.state.left===0&&r.state.bonus===0)paywall()}
   catch(e){add("team","Rose can't connect right now. Please try again in a minute.")}})();
 </script></body></html>
