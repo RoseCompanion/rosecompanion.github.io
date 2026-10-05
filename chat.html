@@ -5,8 +5,19 @@
 <meta property="og:image" content="https://rosecompanion.github.io/img/hero.jpg">
 <link rel="icon" href="img/hero.jpg"><link rel="stylesheet" href="style.css">
 <style>
-html,body{height:100%}
-body{display:flex;flex-direction:column}
+.chatwrap{height:100vh;height:100dvh;display:flex;flex-direction:column}
+.diary-link{font:600 14px system-ui,sans-serif;color:var(--rose)!important;text-decoration:none;white-space:nowrap}
+.corner{max-width:760px;margin:0 auto;padding:28px 16px 40px;font:17px/1.6 system-ui,sans-serif}
+.corner .bio{display:flex;gap:18px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:18px}
+.corner .bio img{width:96px;height:96px;border-radius:50%;object-fit:cover;flex:none}
+.corner h2{font:bold 26px Georgia,serif;margin:0 0 4px}
+.corner .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.corner .tags span{background:var(--rose-soft);border-radius:999px;padding:3px 10px;font-size:14px}
+.post{background:var(--card);border:1px solid var(--line);border-radius:22px;margin:18px 0;overflow:hidden}
+.post img{width:100%;aspect-ratio:1;object-fit:cover;display:block}
+.post .txt{padding:14px 18px 16px}.post .when{font-size:13px;color:var(--muted)}
+.post .reply{display:inline-block;margin-top:8px;font:600 15px system-ui,sans-serif;color:var(--rose);text-decoration:none}
+.corner .fine{font-size:13px;color:var(--muted);text-align:center;margin-top:24px}
+@media (max-width:520px){.corner .bio{flex-direction:column;text-align:center}.corner .tags{justify-content:center}}
 .chat-top{display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid var(--line);background:var(--card)}
 .chat-top img{width:44px;height:44px;border-radius:50%;object-fit:cover}
 .chat-top .who{flex:1;font:15px/1.3 system-ui,sans-serif}.chat-top .who b{font:bold 19px Georgia,serif;display:block}
@@ -33,9 +44,25 @@ body{display:flex;flex-direction:column}
 .chips{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 12px}.chips button{background:var(--card);color:var(--ink);border:1px solid var(--rose);border-radius:999px;font:16px system-ui,sans-serif;padding:9px 14px;cursor:pointer}.gate .no{background:transparent;color:var(--muted);border:1px solid var(--line)}
 </style></head>
 <body>
-<div class="chat-top"><img src="img/hero.jpg" alt="Rose"><div class="who"><b>Rose</b>28 · coffee, mountains &amp; karaoke · usually replies in seconds</div><a href="./">About</a></div>
+<div class="chatwrap">
+<div class="chat-top"><img src="img/hero.jpg" alt="Rose"><div class="who"><b>Rose</b>28 · coffee, mountains &amp; karaoke · usually replies in seconds</div><a class="diary-link" href="#corner">📸 My diary</a></div>
 <div id="log" aria-live="polite"></div>
 <div id="bar"><form id="f"><textarea id="t" rows="1" placeholder="Say hi to Rose…" aria-label="Message" disabled></textarea><button id="b" disabled>Send</button></form><div class="left" id="left"></div></div>
+</div>
+<section class="corner" id="corner" aria-label="Rose's corner">
+<div class="bio"><img src="img/hero.jpg" alt="Rose"><div><h2>Rose's corner 🌹</h2>
+Hi, I'm Rose. I'm happiest with a good coffee in my hand and a good story in my ear. I hike whenever I can, sing karaoke badly but with great confidence, and I'll never say no to a fairground. Pull up a chair and tell me about your day.
+<div class="tags"><span>☕ coffee</span><span>⛰️ hiking</span><span>🎤 karaoke</span><span>🏐 beach days</span><span>🎶 festivals</span><span>⛷️ ski trips</span></div></div></div>
+<article class="post"><img src="img/diary/summit.jpg" alt="Rose at a mountain summit" loading="lazy"><div class="txt"><div class="when">This week</div>Made it to the top just as the sun came up. Cold fingers, warm heart, best view in the world. What's the most beautiful place you've ever stood? <br><a class="reply" href="#" data-say="The most beautiful place I've ever been is…">Tell me 💬</a></div></article>
+<article class="post"><img src="img/diary/cafe.jpg" alt="Rose eating a croissant at a café" loading="lazy"><div class="txt"><div class="when">Last weekend</div>A croissant, a cappuccino and a cobbled street. Some afternoons don't need a plan. How do you take your coffee? <br><a class="reply" href="#" data-say="I take my coffee…">Tell me 💬</a></div></article>
+<article class="post"><img src="img/diary/karaoke.jpg" alt="Rose singing karaoke" loading="lazy"><div class="txt"><div class="when">Friday night</div>Karaoke night. I may not hit every note, but I hit them with feeling 🎤 What's your go-to song? <br><a class="reply" href="#" data-say="My karaoke song would be…">Tell me 💬</a></div></article>
+<article class="post"><img src="img/diary/volleyball.jpg" alt="Rose playing beach volleyball" loading="lazy"><div class="txt"><div class="when">Last month</div>Beach volleyball: diving for every ball, losing most of them, laughing the whole time. Were you a sporty one growing up? <br><a class="reply" href="#" data-say="Growing up I used to play…">Tell me 💬</a></div></article>
+<article class="post"><img src="img/diary/festival.jpg" alt="Rose at a music festival" loading="lazy"><div class="txt"><div class="when">Summer</div>Dancing until my feet gave up. Nothing beats live music under the stars. Best concert you've ever been to? <br><a class="reply" href="#" data-say="The best concert I ever went to was…">Tell me 💬</a></div></article>
+<article class="post"><img src="img/diary/ski.jpg" alt="Rose at a ski resort" loading="lazy"><div class="txt"><div class="when">Winter</div>Freezing outside, hot chocolate inside. I'm a much better hot-chocolate drinker than skier ⛷️ Snow person or sunshine person? <br><a class="reply" href="#" data-say="I'm definitely a…">Tell me 💬</a></div></article>
+<article class="post"><img src="img/diary/candyfloss.jpg" alt="Rose with candyfloss at a fair" loading="lazy"><div class="txt"><div class="when">A while back</div>Candyfloss at the fair. I'm a grown woman and I regret nothing. What was your favourite treat as a kid? <br><a class="reply" href="#" data-say="When I was a kid my favourite treat was…">Tell me 💬</a></div></article>
+<article class="post"><img src="img/diary/fireworks.jpg" alt="Rose watching fireworks" loading="lazy"><div class="txt"><div class="when">New Year's</div>Fireworks always make me feel like a kid again ✨ Got a favourite memory from a celebration like this? <br><a class="reply" href="#" data-say="One celebration I'll never forget…">Tell me 💬</a></div></article>
+<p class="fine">Rose is an AI companion · these photos are illustrations of her world · <a href="./">about</a> · <a href="terms.html">terms</a> · <a href="privacy.html">privacy</a></p>
+</section>
 <script>
 const API="https://chat.sonneblomdigitaal.co.za/api/";
 const log=document.getElementById("log"),t=document.getElementById("t"),b=document.getElementById("b"),leftEl=document.getElementById("left");
@@ -73,6 +100,9 @@ async function send(e){e.preventDefault();const text=t.value.trim();if(!text)ret
 document.getElementById("f").onsubmit=send;
 t.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();send(e)}});
 t.addEventListener("input",()=>{t.style.height="auto";t.style.height=Math.min(t.scrollHeight,140)+"px"});
+document.querySelectorAll(".post .reply").forEach(a=>a.onclick=e=>{e.preventDefault();window.scrollTo({top:0,behavior:"smooth"});
+  if(st&&st.adult){t.value=a.dataset.say+" ";t.focus();t.setSelectionRange(t.value.length,t.value.length)}
+  else{const y=document.getElementById("yes");if(y){y.scrollIntoView({block:"center"});y.animate([{transform:"scale(1)"},{transform:"scale(1.04)"},{transform:"scale(1)"}],{duration:600,iterations:2})}}});
 async function waitPaid(){const w=add("team","Thank you! Confirming your payment…");for(let i=0;i<40;i++){const r=await api("poll");if(r.state&&(r.state.paid||r.state.bonus>0)){w.textContent="Payment received, thank you! You're all set. Now, where were we? 🌹";show(r.state);return}await new Promise(z=>setTimeout(z,3000))}w.textContent="Still waiting for the payment to confirm. If you were charged, it will unlock shortly; or ask for help by typing a message starting with Support:"}
 setInterval(async()=>{if(st&&st.paused){const r=await api("poll",{since:lastTs});(r.messages||[]).filter(m=>m.role==="team"&&m.ts>lastTs).forEach(m=>{add("team",m.text);lastTs=m.ts});show(r.state)}},20000);
 (async()=>{try{const r=await api("session",CODE?{c:CODE}:{});token=r.token;try{localStorage.setItem("rose_token",token)}catch(e){}plans=r.plans;offers=r.offers||{};
