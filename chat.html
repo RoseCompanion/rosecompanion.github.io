@@ -47,16 +47,29 @@
 .gate input{font:17px system-ui,sans-serif;padding:10px 14px;border-radius:12px;border:1px solid var(--line);width:100%;margin:8px 0;background:var(--bg);color:var(--ink)}
 .gate .row{display:flex;gap:8px;flex-wrap:wrap}
 .chips{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 12px}.chips button{background:var(--card);color:var(--ink);border:1px solid var(--rose);border-radius:999px;font:16px system-ui,sans-serif;padding:9px 14px;cursor:pointer}.gate .no{background:transparent;color:var(--muted);border:1px solid var(--line)}
+
+.chatwrap{position:relative}
+#bar textarea:focus{outline:none;border-color:var(--rose);box-shadow:0 0 0 3px var(--rose-soft)}
+.chatwrap.fresh #log{flex:0 0 auto;margin-top:auto;overflow:visible}
+.chatwrap.fresh #bar{margin-bottom:auto;border-top:0;background:transparent;padding-bottom:6vh}
+.chatwrap.fresh #bar textarea{font-size:19px;padding:14px 20px;border-color:var(--rose);box-shadow:0 0 0 4px var(--rose-soft)}
+.chatwrap.fresh .m.assistant{margin:6px auto;text-align:center;max-width:540px;border-radius:18px}
+.heroimg{width:112px;height:112px;border-radius:50%;object-fit:cover;display:block;margin:0 auto 8px;border:3px solid var(--rose)}
+.pills{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;max-width:760px;margin:0 auto 10px}
+.pills button{background:var(--card);color:var(--ink);border:1px solid var(--rose);border-radius:999px;font:15px system-ui,sans-serif;padding:7px 13px;cursor:pointer}
+.pills button:hover{background:var(--rose-soft)}
+.age{display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap;font:13px system-ui,sans-serif;color:var(--muted);margin-top:8px;border-radius:10px;padding:4px 8px}
+.age input{width:18px;height:18px;accent-color:var(--rose)}
+.age.nudge{color:var(--ink);background:var(--rose-soft);font-weight:600}
+.drawer{max-height:62vh;overflow-y:auto;border-bottom:1px solid var(--line);background:var(--bg)}
+.drawer .corner{padding:16px 16px 20px}
 </style></head>
 <body>
-<div class="chatwrap">
-<div class="chat-top"><img src="img/hero.jpg" alt="Rose"><div class="who"><b>Rose</b>28 · coffee, mountains &amp; karaoke · usually replies in seconds</div><a class="diary-link" href="#corner">📸 My diary</a></div>
-<div id="log" aria-live="polite"></div>
-<div id="bar"><form id="f"><textarea id="t" rows="1" placeholder="Say hi to Rose…" aria-label="Message" disabled></textarea><button id="b" disabled>Send</button></form><div class="left" id="left"></div></div>
-</div>
-<section class="corner" id="corner" aria-label="Rose's corner">
+<div class="chatwrap" id="wrap">
+<div class="chat-top"><img src="img/hero.jpg" alt="Rose"><div class="who"><b>Rose</b>28 · coffee, mountains &amp; karaoke · usually replies in seconds</div><a class="diary-link" href="#" id="dl" aria-expanded="false">📸 Rose's corner</a></div>
+<div class="drawer" id="drawer" hidden><section class="corner" aria-label="Rose's corner">
 <div class="bio"><img src="img/hero.jpg" alt="Rose"><div><h2>Rose's corner 🌹</h2>
-Hi, I'm Rose. I'm happiest with a good coffee in my hand and a good story in my ear. I hike whenever I can, sing karaoke badly but with great confidence, and I'll never say no to a fairground. Pull up a chair and tell me about your day.
+Hi, I'm Rose. I'm happiest with a good coffee in my hand and a good story in my ear. I hike whenever I can, sing karaoke badly but with great confidence, and I'll never say no to a fairground.
 <div class="tags"><span>☕ coffee</span><span>⛰️ hiking</span><span>🎤 karaoke</span><span>🏐 beach days</span><span>🎶 festivals</span><span>⛷️ ski trips</span></div></div></div>
 <div class="grid">
 <a class="tile" href="#" data-say="If I'd been at the top with you, I'd have…"><img src="img/diary/summit.jpg" alt="Rose at a mountain summit" loading="lazy"><span>Sunrise at the top. Would've been better with company 😉</span></a>
@@ -65,7 +78,11 @@ Hi, I'm Rose. I'm happiest with a good coffee in my hand and a good story in my 
 <a class="tile" href="#" data-say="Challenge accepted, Rose. Back in my day I…"><img src="img/diary/volleyball.jpg" alt="Rose playing beach volleyball" loading="lazy"><span>I dive for every ball. Think you could keep up? 🏐</span></a>
 </div>
 <p class="fine">Rose is an AI companion · these photos are illustrations of her world · <a href="./">about</a> · <a href="terms.html">terms</a> · <a href="privacy.html">privacy</a></p>
-</section>
+</section></div>
+<div id="log" aria-live="polite"></div>
+<div id="bar"><div class="pills" id="pills"></div><form id="f"><textarea id="t" rows="1" placeholder="Say hi to Rose…" aria-label="Message"></textarea><button id="b">Send</button></form>
+<label class="age" id="age"><input type="checkbox" id="ok18"> I'm 18 or older · Rose is an AI companion, friendly and never explicit · <a href="terms.html">terms</a></label><div class="left" id="left"></div></div>
+</div>
 <script>
 const API="https://chat.sonneblomdigitaal.co.za/api/";
 const log=document.getElementById("log"),t=document.getElementById("t"),b=document.getElementById("b"),leftEl=document.getElementById("left");
@@ -75,16 +92,6 @@ try{token=localStorage.getItem("rose_token")}catch(e){}
 async function api(p,d={}){const r=await fetch(API+p,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({token,...d})});return r.json()}
 function esc(s){const d=document.createElement("div");d.textContent=s;return d.innerHTML}
 function add(role,text){const d=document.createElement("div");d.className="m "+role;d.innerHTML=esc(text);log.appendChild(d);log.scrollTop=log.scrollHeight;return d}
-function show(s){st=s;const ok=s.adult;t.disabled=b.disabled=!ok;
-  leftEl.textContent=!ok?"":s.paid?("Unlimited chat until "+new Date(s.paid_until*1000).toLocaleString([], {dateStyle:"medium",timeStyle:"short"})):(s.bonus>0?s.bonus+" extra messages left":(s.left+" of 10 daily messages left"))+" · AI companion"}
-function gate(w){add("assistant",w||"Hi there, I'm Rose 🌹 Honestly, a good chat is my favourite thing. Tell me your name and how your day's been?");
-  const g=document.createElement("div");g.className="gate";g.innerHTML=`<button id="yes" style="width:100%;font-size:19px;padding:14px">I'm 18 or older · Start chatting</button><div class="note" style="text-align:center">Rose is an AI companion · friendly, never explicit · By chatting you accept the <a href="terms.html">terms</a> · <a href="#" id="no">I'm under 18</a></div>`;log.appendChild(g);log.scrollTop=log.scrollHeight;
-  g.querySelector("#yes").onclick=async()=>{const r=await api("adult");g.remove();show(r.state);hello();offerCard()};
-  g.querySelector("#no").onclick=e=>{e.preventDefault();g.innerHTML="Thanks for being honest. This chat is only for adults, so I can't talk here. Take care!"}}
-function chips(){if(document.querySelector(".chips"))return;const c=document.createElement("div");c.className="chips";
-  ["Hi Rose! 👋","I've had a long day","Tell me about yourself"].forEach(x=>{const k=document.createElement("button");k.type="button";k.textContent=x;
-    k.onclick=()=>{c.remove();t.value=x;send({preventDefault(){}})};c.appendChild(k)});log.appendChild(c);log.scrollTop=log.scrollHeight}
-function hello(){const ty=add("assistant typing","Rose is typing…");setTimeout(()=>{ty.remove();add("assistant","Lovely, I'm so glad you're here! 🌹 Just type below, or tap one of these to get us started:");chips();t.focus()},1200)}
 function paywall(){if(document.querySelector(".card"))return;const c=document.createElement("div");c.className="card";
   c.innerHTML=`<h3>That's your 10 messages for today</h3>They reset tomorrow, or keep chatting now:<div class="plans">${plans.map(p=>`<button data-k="${p.key}"><span>${esc(p.title)}</span><span>$${p.usd.toFixed(2)}</span></button>`).join("")}</div><div class="note">Pay by card, Apple Pay or Google Pay. Payments are handled securely by Yoco and charged in South African rand at today's rate; your bank converts it. One-off payment, nothing renews. <a href="refunds.html">Refunds</a>.</div>`;
   c.querySelectorAll("button").forEach(x=>x.onclick=async()=>{x.disabled=true;x.lastChild.textContent="Opening…";const r=await api("checkout",{plan:x.dataset.k});if(r.url)location.href=r.url;else{x.disabled=false;alertMsg(r.error||"Please try again.")}});
@@ -96,20 +103,32 @@ function offerCard(){const o=offers[OFFER];if(!o||!st||!st.adult)return;
   const x=c.querySelector("button");x.onclick=async()=>{x.disabled=true;x.lastChild.textContent="Opening…";const r=await api("checkout",{offer:OFFER});if(r.url)location.href=r.url;else{x.disabled=false;x.lastChild.textContent="$"+o.usd.toFixed(2);alertMsg(r.error||"Please try again.")}};
   log.appendChild(c);log.scrollTop=log.scrollHeight}
 function alertMsg(s){add("team",s)}
-async function send(e){e.preventDefault();const text=t.value.trim();if(!text)return;document.querySelectorAll(".chips").forEach(c=>c.remove());t.value="";add("user",text);b.disabled=true;const ty=add("assistant typing","Rose is typing…");
+const wrap=document.getElementById("wrap"),pillsEl=document.getElementById("pills"),ageEl=document.getElementById("age"),ok18=document.getElementById("ok18"),drawer=document.getElementById("drawer"),dl=document.getElementById("dl");
+const PILLS=[["☕ Coffee spots","Let's talk coffee spots ☕"],["🎤 Karaoke picks","Karaoke picks! What would you sing? 🎤"],["⛰️ Favourite hikes","Tell me about your favourite hikes ⛰️"],["😮‍💨 Long day","I've had a long day 😮‍💨"]];
+function show(s){st=s;ageEl.hidden=!!s.adult;
+  leftEl.textContent=!s.adult?"":s.paid?("Unlimited chat until "+new Date(s.paid_until*1000).toLocaleString([], {dateStyle:"medium",timeStyle:"short"})):(s.bonus>0?s.bonus+" extra messages left":(s.left+" of 10 daily messages left"))+" · AI companion"}
+function pills(on){pillsEl.innerHTML="";if(!on)return;PILLS.forEach(([l,msg])=>{const k=document.createElement("button");k.type="button";k.textContent=l;k.onclick=()=>{t.value=msg;send({preventDefault(){}})};pillsEl.appendChild(k)})}
+function fresh(on,greet){wrap.classList.toggle("fresh",on);pills(on);if(on){const i=document.createElement("img");i.className="heroimg";i.src="img/hero.jpg";i.alt="Rose";log.appendChild(i);add("assistant",greet||"Hi there, I'm Rose 🌹 Honestly, a good chat is my favourite thing. Tell me your name and how your day's been?")}}
+async function ensureAdult(){if(st&&st.adult)return true;
+  if(!ok18.checked){ageEl.classList.add("nudge");ageEl.animate([{transform:"scale(1)"},{transform:"scale(1.05)"},{transform:"scale(1)"}],{duration:500,iterations:2});ok18.focus();return false}
+  const r=await api("adult");show(r.state);offerCard();return true}
+ok18.onchange=()=>ageEl.classList.remove("nudge");
+dl.onclick=e=>{e.preventDefault();drawer.hidden=!drawer.hidden;dl.setAttribute("aria-expanded",String(!drawer.hidden))};
+async function send(e){e.preventDefault();const text=t.value.trim();if(!text)return;if(!await ensureAdult())return;
+  if(wrap.classList.contains("fresh")){wrap.classList.remove("fresh");pills(false);const h=log.querySelector(".heroimg");if(h)h.remove()}
+  t.value="";t.style.height="auto";add("user",text);b.disabled=true;const ty=add("assistant typing","Rose is typing…");
   try{const r=await api("send",{text});ty.remove();(r.messages||[]).forEach(m=>add(m.role,m.text));if(r.paywall)paywall();if(r.state)show(r.state);if(r.error==="slow down")add("team","One moment, then try again.")}
   catch(err){ty.remove();add("team","Connection hiccup. Please try again.")}
-  b.disabled=!st||!st.adult;t.focus()}
+  b.disabled=false;t.focus()}
 document.getElementById("f").onsubmit=send;
 t.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();send(e)}});
 t.addEventListener("input",()=>{t.style.height="auto";t.style.height=Math.min(t.scrollHeight,140)+"px"});
-document.querySelectorAll(".tile").forEach(a=>a.onclick=e=>{e.preventDefault();window.scrollTo({top:0,behavior:"smooth"});
-  if(st&&st.adult){t.value=a.dataset.say+" ";t.focus();t.setSelectionRange(t.value.length,t.value.length)}
-  else{const y=document.getElementById("yes");if(y){y.scrollIntoView({block:"center"});y.animate([{transform:"scale(1)"},{transform:"scale(1.04)"},{transform:"scale(1)"}],{duration:600,iterations:2})}}});
+document.querySelectorAll(".tile").forEach(a=>a.onclick=e=>{e.preventDefault();drawer.hidden=true;dl.setAttribute("aria-expanded","false");t.value=a.dataset.say+" ";t.focus();t.setSelectionRange(t.value.length,t.value.length)});
 async function waitPaid(){const w=add("team","Thank you! Confirming your payment…");for(let i=0;i<40;i++){const r=await api("poll");if(r.state&&(r.state.paid||r.state.bonus>0)){w.textContent="Payment received, thank you! You're all set. Now, where were we? 🌹";show(r.state);return}await new Promise(z=>setTimeout(z,3000))}w.textContent="Still waiting for the payment to confirm. If you were charged, it will unlock shortly; or ask for help by typing a message starting with Support:"}
 setInterval(async()=>{if(st&&st.paused){const r=await api("poll",{since:lastTs});(r.messages||[]).filter(m=>m.role==="team"&&m.ts>lastTs).forEach(m=>{add("team",m.text);lastTs=m.ts});show(r.state)}},20000);
 (async()=>{try{const r=await api("session",CODE?{c:CODE}:{});token=r.token;try{localStorage.setItem("rose_token",token)}catch(e){}plans=r.plans;offers=r.offers||{};
-  r.messages.forEach(m=>{add(m.role,m.text);lastTs=Math.max(lastTs,m.ts)});show(r.state);if(!r.state.adult)gate(r.welcome);else if(r.welcome)add("assistant",r.welcome);if(r.state.adult&&!r.messages.length&&!r.welcome)chips();
+  r.messages.forEach(m=>{add(m.role,m.text);lastTs=Math.max(lastTs,m.ts)});show(r.state);
+  if(!r.messages.length)fresh(true,r.welcome);else if(r.welcome)add("assistant",r.welcome);
   const q=new URLSearchParams(location.search);if(q.get("paid"))waitPaid();if(q.get("failed"))add("team","The payment didn't go through. Nothing was charged; you can try again any time.");
   if(q.has("paid")||q.has("failed"))history.replaceState(null,"","chat.html");else offerCard();
   if(r.state.adult&&!r.state.paid&&r.state.left===0&&r.state.bonus===0)paywall()}
