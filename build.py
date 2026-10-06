@@ -2,9 +2,10 @@
 import html
 
 BOT = "https://t.me/EveningCompany_bot"
-UPDATED = "4 October 2026"
+UPDATED = "6 October 2026"
 PRICES = [("20 extra messages", "0.99", "50"), ("Full chat for 24 hours", "2.49", "125"),
-          ("Monthly companion", "14.99", "750"), ("VIP companion (30 days)", "49.99", "2500")]
+          ("Monthly companion", "14.99", "750"), ("VIP companion (30 days)", "49.99", "2500"),
+          ("Complete photo album (card or crypto)", "124.99", "-"), ("VIP Girlfriend for a week (card or crypto)", "249", "-")]
 GALLERY = [("hiking_at_mountain_summit", "Mountain hikes"), ("playing_beach_volleyball", "Beach volleyball"),
            ("singing_at_karaoke_bar", "Karaoke nights"), ("eating_pastry_at_cafe", "Good coffee"),
            ("laughing_at_music_festival", "Music festivals"), ("smiling_at_ski_resort", "Ski trips")]
@@ -33,10 +34,13 @@ or financial advice. If you're in crisis, please contact local emergency service
 cta = f'<a class="btn" href="chat.html">Chat with Rose 🌹</a><p class="small">Right here in your browser, nothing to install. Prefer Telegram? <a href="{BOT}">Chat on Telegram</a>.</p>'
 gallery = "".join(f'<figure><img src="img/{f}.jpg" alt="Illustration of Rose: {c}" loading="lazy"><figcaption>{c}</figcaption></figure>'
                   for f, c in GALLERY)
-prices = "".join(f"<tr><td>{t}</td><td>${usd}</td><td>{stars} ⭐</td></tr>" for t, usd, stars in PRICES)
+prices = "".join(f"<tr><td>{t}</td><td>${usd}</td><td>{stars + " ⭐" if stars != "-" else "-"}</td></tr>" for t, usd, stars in PRICES)
 
 page("index.html", "Rose · AI companion for good conversation",
      "Rose is a warm, witty AI companion on Telegram. Good conversation any time of day. Adults 18+.", f"""
+<section class="newoffers" aria-label="New from Rose"><span class="tag">New 💗</span>
+<a href="chat.html#album"><img src="s/rose_48.jpg" alt=""><span><b>My complete photo album</b> $124.99 <s>$199.99</s></span></a>
+<a href="chat.html#gf"><img src="s/rose_53.jpg" alt=""><span><b>VIP Girlfriend for a week</b> $249 · album included</span></a></section>
 <section class="hero"><img src="img/hero.jpg" alt="Illustrated portrait of Rose, an AI companion">
 <div><h1>Chat with Rose</h1>
 <p class="lead">A warm, witty companion who's always up for a proper conversation, any time of day. Tell her about your
