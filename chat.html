@@ -106,7 +106,7 @@ footer{font-size:12px;color:var(--muted);text-align:center;margin-top:22px}
 .offer.owned button{background:#4caf6a}
 .diary-foot{font:700 17px Caveat,cursive;color:#9b6b7a;text-align:center;padding:0 16px 14px 56px}
 #buy{position:fixed;inset:0;background:rgba(43,34,38,.55);display:flex;align-items:center;justify-content:center;z-index:20;padding:16px}
-#buy[hidden]{display:none}
+#buy[hidden],.card[hidden]{display:none!important}
 #buy .box{background:#fff9fb;border-radius:18px;max-width:430px;width:100%;padding:20px;border:1px solid #f3c6d6;box-shadow:0 20px 50px rgba(0,0,0,.25);max-height:92vh;overflow:auto}
 #buy h3{font:700 28px Caveat,cursive;color:#c2416b;margin:0}
 #buy .disc{background:#fff;border:1px dashed #e8789a;border-radius:12px;padding:10px 12px;font-size:13.5px;margin:10px 0}
@@ -149,12 +149,12 @@ footer{font-size:12px;color:var(--muted);text-align:center;margin-top:22px}
 </section>
 <div id="buy" hidden><div class="box"><button class="x" type="button" aria-label="Close">×</button><div id="buybody"></div></div></div>
 <div class="split">
-<section class="card hot" id="albumbox"><h2>🌹 My Rose Garden <span class="cnt" id="albumcount"></span></h2><div class="bd">
+<section class="card hot" id="albumbox" hidden><h2>🌹 My Rose Garden <span class="cnt" id="albumcount"></span></h2><div class="bd">
 <div class="car" id="car"><button class="nav prev" aria-label="Previous photo">‹</button><button class="nav next" aria-label="Next photo">›</button><div class="cap" id="carcap"></div><div class="ov" id="carov"><span class="lockicon">🔒</span><b>Just for you…</b><span>My private photo vault. I don't post these anywhere else</span><button class="unl" type="button">Enter my Rose Garden</button></div></div>
 <div class="dots" id="dots"></div>
 <div class="album-cta" id="albumcta">New photos every week · from $14.99 · <a href="#" id="unlock">see plans</a></div>
 </div></section>
-<section class="card" id="vipbox"><h2>VIP Telegram chat · 18+</h2><div class="bd"><div class="vip" id="vip">
+<section class="card" id="vipbox" hidden><h2>VIP Telegram chat · 18+</h2><div class="bd"><div class="vip" id="vip">
 <div class="tg"><span>✈</span>Me, in your pocket</div>
 <ul><li>Our own private chat on Telegram</li><li>Unlimited messages, priority replies</li><li>I remember everything about you</li><li>A daily photo + my full private album</li></ul>
 <div class="gate" id="vipgate">$49.99 for 30 days · one-off, nothing renews · 18+<button id="vipbtn">Unlock VIP chat</button></div>
@@ -185,13 +185,13 @@ function toPlans(title,vipOnly){document.getElementById("chat").scrollIntoView({
 async function loadAlbum(){try{const r=await api("album");car=r.items;document.getElementById("albumcount").textContent=car.length+" photos";const c=document.getElementById("car");c.querySelectorAll("img").forEach(x=>x.remove());
   const dots=document.getElementById("dots");dots.innerHTML="";
   const first=c.querySelector(".nav");car.forEach((it,k)=>{const im=document.createElement("img");im.src=it.full||it.blur;im.alt=it.full?it.caption:"Locked photo";c.insertBefore(im,first);dots.appendChild(document.createElement("i"))});
-  document.getElementById("carov").hidden=!!r.unlocked;document.getElementById("albumcta").hidden=!!r.unlocked;
+  document.getElementById("albumbox").hidden=!r.unlocked;document.getElementById("carov").hidden=!!r.unlocked;document.getElementById("albumcta").hidden=!!r.unlocked;
   document.getElementById("carov").onclick=()=>toPlans("Unlock my private album 🔒");
   c.onclick=e=>{if(e.target.tagName==="IMG"&&car[ci].full)lightbox(car[ci].full)};
   clearInterval(carT);carT=setInterval(()=>carShow(ci+1),3500);carShow(0)}catch(e){}}
 document.querySelector("#car .prev").onclick=e=>{e.stopPropagation();carShow(ci-1)};
 document.querySelector("#car .next").onclick=e=>{e.stopPropagation();carShow(ci+1)};
-function vipUi(s){const v=document.getElementById("vip"),g=document.getElementById("vipgate");const on=s&&s.paid&&(s.plan==="vip"||s.plan==="gf");v.classList.toggle("unlocked",on);
+function vipUi(s){const v=document.getElementById("vip"),g=document.getElementById("vipgate");const on=s&&s.paid&&(s.plan==="vip"||s.plan==="gf");v.classList.toggle("unlocked",on);document.getElementById("vipbox").hidden=!on;
   if(on){g.innerHTML='✅ You\'re VIP 🌹<button id="tgbtn">Open my VIP chat on Telegram</button>';document.getElementById("tgbtn").onclick=async()=>{const r=await api("tglink");if(r.url)location.href=r.url;else alertMsg("Please try again in a moment.")}}}
 document.getElementById("vipbtn").onclick=async()=>{if(!await ensureAdult()){document.getElementById("chat").scrollIntoView({block:"start"});return}toPlans("Join VIP 🌹",true)};
 function paywall(){if(document.querySelector(".card"))return;const c=document.createElement("div");c.className="card";
@@ -242,7 +242,7 @@ function fresh(on,greet){pills(on);if(!on)return;if(greet)return add("assistant"
   const d=document.createElement("div");d.className="m assistant";
   d.innerHTML='Hi there, I\'m Rose 🌹 Glad you found my corner. Do you want to chat with me personally, or do you want <b>access to my private photo vault</b> (my Rose Garden)?<div class="choice"><button type="button" data-c="chat">💬 Chat with you</button><button type="button" data-c="vault">🌹 My Rose Garden</button></div>';
   d.querySelector('[data-c=chat]').onclick=()=>{d.querySelector(".choice").remove();t.value="I'd love to chat with you personally 😊";send({preventDefault(){}})};
-  d.querySelector('[data-c=vault]').onclick=()=>{d.querySelector(".choice").remove();memberCard("Welcome to my Rose Garden 🌹");document.getElementById("albumbox").scrollIntoView({block:"nearest"})};
+  d.querySelector('[data-c=vault]').onclick=()=>{d.querySelector(".choice").remove();memberCard("Welcome to my Rose Garden 🌹");document.getElementById("offers").scrollIntoView({block:"nearest"})};
   log.appendChild(d)}
 async function ensureAdult(){if(st&&st.adult)return true;
   if(!ok18.checked){ageEl.hidden=false;ageEl.classList.add("nudge");document.getElementById("bar").scrollIntoView({block:"center"});ok18.focus();add("team","Before paying, please tick the box below to confirm you're 18 or older.");return false}
