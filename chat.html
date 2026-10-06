@@ -95,6 +95,8 @@ footer{font-size:12px;color:var(--muted);text-align:center;margin-top:22px}
 .offer:nth-child(1){transform:rotate(-.6deg)}.offer:nth-child(2){transform:rotate(.6deg)}
 .offer .ph{display:grid;grid-template-columns:2fr 1fr;grid-template-rows:1fr 1fr;gap:4px;aspect-ratio:4/3;border-radius:10px;overflow:hidden}
 .offer .ph img{width:100%;height:100%;object-fit:cover}.offer .ph img:first-child{grid-row:span 2}
+.offer .ph .lk{position:relative;overflow:hidden;display:block}.offer .ph .lk img{filter:blur(9px) saturate(1.2);transform:scale(1.15)}
+.offer .ph .lk::after{content:"🔒";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:22px;background:rgba(194,65,107,.15)}
 .offer .ph.one{display:block}.offer .ph.one img{height:100%}
 .offer h3{font:700 25px Caveat,cursive;color:#2b2226;margin:0;line-height:1.1}
 .offer .d{font-size:13.5px;color:#5c4a4f}
@@ -136,10 +138,10 @@ footer{font-size:12px;color:var(--muted);text-align:center;margin-top:22px}
 <div class="diary-head"><span class="tape"></span><span class="tape r"></span><span class="hearts">💗</span>
 <div class="lock">🔒 private · keep out</div><h2>My Diary</h2><p>things I only share with my favourite people…</p></div>
 <div class="offers">
-<div class="offer" id="album"><span class="badge">Sale</span><div class="ph"><img src="s/rose_48.jpg" alt="Rose in a red bikini at the beach"><img src="s/rose_42.jpg" alt="Rose on a beach towel"><img src="s/rose_53.jpg" alt="Rose dressed up for date night"></div>
+<div class="offer" id="album"><span class="badge">Sale</span><div class="ph"><img src="s/rose_48.jpg" alt="Rose in a red bikini at the beach"><span class="lk"><img src="s/rose_55.jpg" alt="Locked photo"></span><span class="lk"><img src="s/rose_49.jpg" alt="Locked photo"></span></div>
 <h3>My complete photo album 📸</h3><div class="d">Every photo of me: beach days, bikinis, travel, cosy nights in and date night. Yours to keep, new photos added free.</div>
 <div class="price"><b>$124.99</b><s>$199.99</s></div><button type="button" data-buy="album">I want it 💕</button></div>
-<div class="offer" id="gf"><span class="badge">VIP</span><div class="ph one"><img src="s/rose_53.jpg" alt="Rose glammed up for date night"></div>
+<div class="offer" id="gf"><span class="badge">VIP</span><div class="ph"><img src="s/rose_55.jpg" alt="Rose in a turquoise bikini on a white beach"><span class="lk"><img src="s/rose_47.jpg" alt="Locked photo"></span><span class="lk"><img src="s/rose_45.jpg" alt="Locked photo"></span></div>
 <h3>VIP Girlfriend for a week 💖</h3><div class="d">A whole week where you're my favourite: unlimited chat and I remember everything about you, here, on Telegram, Facebook or Instagram. Good-morning and good-night messages, daily photos, and my complete album to keep.</div>
 <div class="price"><b>$249</b><span class="small">· album included</span></div><button type="button" data-buy="gf">Make me yours 😘</button></div>
 </div>
