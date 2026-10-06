@@ -4,7 +4,7 @@
 <meta property="og:title" content="Rose"><meta property="og:description" content="Coffee, mountains, karaoke and good conversation. Come say hi. 18+.">
 <meta property="og:image" content="https://rosecompanion.github.io/img/hero.jpg">
 <link rel="icon" href="img/hero.jpg">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Lato:wght@400;700&family=Caveat:wght@600;700&family=Pacifico&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#ffffff;--soft:#fbf6f4;--line:#eee3df;--ink:#2b2226;--muted:#8a7b78;--accent:#c2416b;--accent2:#e8789a;--gold:#c9a27e}
 *{box-sizing:border-box}
@@ -79,6 +79,44 @@ footer{font-size:12px;color:var(--muted);text-align:center;margin-top:22px}
 .choice button[data-c=vault]{background:var(--accent);color:#fff;border-color:var(--accent)}
 #lightbox{position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:9;padding:16px}
 #lightbox img{max-width:100%;max-height:90vh;border-radius:12px}
+/* My Diary offers */
+.diary{position:relative;margin:4px 0 22px;border-radius:18px;overflow:hidden;border:1px solid #f3c6d6;box-shadow:0 10px 30px rgba(194,65,107,.14);
+  background:repeating-linear-gradient(#fff9fb 0 27px,#f6d9e4 27px 28px);}
+.diary::before{content:"";position:absolute;left:46px;top:0;bottom:0;width:2px;background:#f4a7bf;opacity:.7}
+.diary-head{position:relative;text-align:center;padding:22px 16px 10px 56px}
+.diary-head .tape{position:absolute;top:-6px;width:110px;height:26px;background:rgba(255,182,206,.75);transform:rotate(-6deg);left:18%;box-shadow:0 2px 4px rgba(0,0,0,.06)}
+.diary-head .tape.r{left:auto;right:16%;transform:rotate(5deg);background:rgba(201,162,126,.45)}
+.diary-head h2{font:400 34px Pacifico,cursive;color:#c2416b;margin:6px 0 0;letter-spacing:.5px;border:0;padding:0;text-transform:none}
+.diary-head p{font:700 21px Caveat,cursive;color:#7a4b5a;margin:2px 0 0}
+.diary-head .lock{font:700 12px Lato,sans-serif;letter-spacing:2px;color:#c9a27e;text-transform:uppercase}
+.hearts{position:absolute;right:16px;top:14px;font-size:20px;transform:rotate(12deg)}
+.offers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;padding:8px 16px 18px 58px}
+.offer{background:#fff;border:1px solid #f3c6d6;border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:8px;position:relative}
+.offer:nth-child(1){transform:rotate(-.6deg)}.offer:nth-child(2){transform:rotate(.6deg)}
+.offer .ph{display:grid;grid-template-columns:2fr 1fr;grid-template-rows:1fr 1fr;gap:4px;aspect-ratio:4/3;border-radius:10px;overflow:hidden}
+.offer .ph img{width:100%;height:100%;object-fit:cover}.offer .ph img:first-child{grid-row:span 2}
+.offer .ph.one{display:block}.offer .ph.one img{height:100%}
+.offer h3{font:700 25px Caveat,cursive;color:#2b2226;margin:0;line-height:1.1}
+.offer .d{font-size:13.5px;color:#5c4a4f}
+.offer .price{display:flex;align-items:baseline;gap:8px}.offer .price b{font:700 24px Lato,sans-serif;color:#c2416b}.offer .price s{color:#a8999b;font-size:15px}
+.offer .badge{position:absolute;top:-10px;right:10px;background:#c2416b;color:#fff;font:700 11px Lato,sans-serif;letter-spacing:.8px;padding:4px 9px;border-radius:10px;text-transform:uppercase}
+.offer button{margin-top:auto;background:linear-gradient(135deg,#e8789a,#c2416b);color:#fff;border:0;border-radius:22px;font:700 15px Lato,sans-serif;padding:11px;cursor:pointer}
+.offer.owned button{background:#4caf6a}
+.diary-foot{font:700 17px Caveat,cursive;color:#9b6b7a;text-align:center;padding:0 16px 14px 56px}
+#buy{position:fixed;inset:0;background:rgba(43,34,38,.55);display:flex;align-items:center;justify-content:center;z-index:20;padding:16px}
+#buy[hidden]{display:none}
+#buy .box{background:#fff9fb;border-radius:18px;max-width:430px;width:100%;padding:20px;border:1px solid #f3c6d6;box-shadow:0 20px 50px rgba(0,0,0,.25);max-height:92vh;overflow:auto}
+#buy h3{font:700 28px Caveat,cursive;color:#c2416b;margin:0}
+#buy .disc{background:#fff;border:1px dashed #e8789a;border-radius:12px;padding:10px 12px;font-size:13.5px;margin:10px 0}
+#buy label{display:flex;gap:8px;font-size:13.5px;align-items:flex-start;margin:8px 0}#buy input{accent-color:#c2416b;margin-top:3px}
+#buy .pay{display:grid;gap:8px;margin-top:12px}
+#buy .pay button{border:0;border-radius:22px;font:700 15px Lato,sans-serif;padding:11px;cursor:pointer;background:#c2416b;color:#fff}
+#buy .pay button.c{background:#2b2226}
+#buy .pay button:disabled{opacity:.45;cursor:not-allowed}
+#buy .x{float:right;background:none;border:0;font-size:22px;cursor:pointer;color:#8a7b78}
+#buy .addr{font:13px/1.4 ui-monospace,monospace;background:#fff;border:1px solid #eee3df;border-radius:10px;padding:9px;word-break:break-all;margin:6px 0}
+#buy .small{font-size:12px;color:#8a7b78}
+@media (max-width:640px){.offers{grid-template-columns:1fr;padding-left:52px;padding-right:12px}.diary-head h2{font-size:28px}}
 @media (max-width:640px){.split{grid-template-columns:1fr}.top{display:none}.bio{gap:12px;padding:10px 0 12px}.bio img{width:72px;height:72px}.bio h1{font-size:21px}.bio .sub{font-size:12.5px}.bio p{font-size:13px;margin-top:4px}.status{font-size:12px}.card h2{padding:9px 14px}#log{height:max(170px,calc(100svh - 400px))}.pills{flex-wrap:nowrap;overflow-x:auto}.pills button{flex:none}}
 @media (prefers-reduced-motion:reduce){.lockicon{animation:none}}
 </style></head>
@@ -94,6 +132,20 @@ footer{font-size:12px;color:var(--muted);text-align:center;margin-top:22px}
 <div id="bar"><div class="pills" id="pills"></div><form id="f"><textarea id="t" rows="1" placeholder="Write to Rose…" aria-label="Message"></textarea><button id="b">Send</button></form>
 <label class="age" id="age" hidden><input type="checkbox" id="ok18"> I'm 18 or older (required for payment) · Rose is an AI companion, friendly and never explicit</label><div class="left" id="left"></div></div>
 </section>
+<section class="diary" id="offers" aria-label="Rose's offers">
+<div class="diary-head"><span class="tape"></span><span class="tape r"></span><span class="hearts">💗</span>
+<div class="lock">🔒 private · keep out</div><h2>My Diary</h2><p>things I only share with my favourite people…</p></div>
+<div class="offers">
+<div class="offer" id="album"><span class="badge">Sale</span><div class="ph"><img src="s/rose_48.jpg" alt="Rose in a red bikini at the beach"><img src="s/rose_42.jpg" alt="Rose on a beach towel"><img src="s/rose_53.jpg" alt="Rose dressed up for date night"></div>
+<h3>My complete photo album 📸</h3><div class="d">Every photo of me: beach days, bikinis, travel, cosy nights in and date night. Yours to keep, new photos added free.</div>
+<div class="price"><b>$124.99</b><s>$199.99</s></div><button type="button" data-buy="album">I want it 💕</button></div>
+<div class="offer" id="gf"><span class="badge">VIP</span><div class="ph one"><img src="s/rose_53.jpg" alt="Rose glammed up for date night"></div>
+<h3>VIP Girlfriend for a week 💖</h3><div class="d">A whole week where you're my favourite: unlimited chat and I remember everything about you, here, on Telegram, Facebook or Instagram. Good-morning and good-night messages, daily photos, and my complete album to keep.</div>
+<div class="price"><b>$249</b><span class="small">· album included</span></div><button type="button" data-buy="gf">Make me yours 😘</button></div>
+</div>
+<div class="diary-foot">xoxo, Rose 🌹 · card, Apple Pay, Google Pay or crypto (USDC) · 18+</div>
+</section>
+<div id="buy" hidden><div class="box"><button class="x" type="button" aria-label="Close">×</button><div id="buybody"></div></div></div>
 <div class="split">
 <section class="card hot" id="albumbox"><h2>🌹 My Rose Garden <span class="cnt" id="albumcount"></span></h2><div class="bd">
 <div class="car" id="car"><button class="nav prev" aria-label="Previous photo">‹</button><button class="nav next" aria-label="Next photo">›</button><div class="cap" id="carcap"></div><div class="ov" id="carov"><span class="lockicon">🔒</span><b>Just for you…</b><span>My private photo vault. I don't post these anywhere else</span><button class="unl" type="button">Enter my Rose Garden</button></div></div>
@@ -111,8 +163,8 @@ footer{font-size:12px;color:var(--muted);text-align:center;margin-top:22px}
 <script>
 const API="https://chat.sonneblomdigitaal.co.za/api/";
 const log=document.getElementById("log"),t=document.getElementById("t"),b=document.getElementById("b"),leftEl=document.getElementById("left");
-let token=null,st=null,plans=[],offers={},lastTs=0;
-const OFFER=new URLSearchParams(location.search).get("offer"),CODE=new URLSearchParams(location.search).get("c");
+let token=null,st=null,plans=[],offers={},lastTs=0,products=[],disclaimer="",crypto=null;
+const OFFER=new URLSearchParams(location.search).get("offer"),CODE=new URLSearchParams(location.search).get("c"),LINK=new URLSearchParams(location.search).get("u");
 try{token=localStorage.getItem("rose_token")}catch(e){}
 async function api(p,d={}){const r=await fetch(API+p,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({token,...d})});return r.json()}
 function esc(s){const d=document.createElement("div");d.textContent=s;return d.innerHTML}
@@ -137,7 +189,7 @@ async function loadAlbum(){try{const r=await api("album");car=r.items;document.g
   clearInterval(carT);carT=setInterval(()=>carShow(ci+1),3500);carShow(0)}catch(e){}}
 document.querySelector("#car .prev").onclick=e=>{e.stopPropagation();carShow(ci-1)};
 document.querySelector("#car .next").onclick=e=>{e.stopPropagation();carShow(ci+1)};
-function vipUi(s){const v=document.getElementById("vip"),g=document.getElementById("vipgate");const on=s&&s.paid&&s.plan==="vip";v.classList.toggle("unlocked",on);
+function vipUi(s){const v=document.getElementById("vip"),g=document.getElementById("vipgate");const on=s&&s.paid&&(s.plan==="vip"||s.plan==="gf");v.classList.toggle("unlocked",on);
   if(on){g.innerHTML='✅ You\'re VIP 🌹<button id="tgbtn">Open my VIP chat on Telegram</button>';document.getElementById("tgbtn").onclick=async()=>{const r=await api("tglink");if(r.url)location.href=r.url;else alertMsg("Please try again in a moment.")}}}
 document.getElementById("vipbtn").onclick=async()=>{if(!await ensureAdult()){document.getElementById("chat").scrollIntoView({block:"start"});return}toPlans("Join VIP 🌹",true)};
 function paywall(){if(document.querySelector(".card"))return;const c=document.createElement("div");c.className="card";
@@ -151,9 +203,37 @@ function offerCard(){const o=offers[OFFER];if(!o||!st)return;
   const x=c.querySelector("button");x.onclick=async()=>{if(!await ensureAdult())return;x.disabled=true;x.lastChild.textContent="Opening…";const r=await api("checkout",{offer:OFFER});if(r.url)location.href=r.url;else{x.disabled=false;x.lastChild.textContent="$"+o.usd.toFixed(2);alertMsg(r.error||"Please try again.")}};
   log.appendChild(c);log.scrollTop=log.scrollHeight}
 function alertMsg(s){add("team",s)}
+const buyEl=document.getElementById("buy"),buyBody=document.getElementById("buybody");
+buyEl.querySelector(".x").onclick=()=>{buyEl.hidden=true};buyEl.onclick=e=>{if(e.target===buyEl)buyEl.hidden=true};
+function owned(){if(!st)return;const a=document.getElementById("album"),g=document.getElementById("gf");
+  if(st.album){a.classList.add("owned");a.querySelector("button").textContent="✅ Yours: open the album"}
+  if(st.paid&&st.plan==="gf"){g.classList.add("owned");g.querySelector("button").textContent="✅ You're my VIP this week 💖"}}
+function buy(k){const p=products.find(x=>x.key===k);if(!p)return;
+  if(k==="album"&&st&&st.album){buyEl.hidden=true;document.getElementById("albumbox").scrollIntoView({block:"center"});return}
+  buyBody.innerHTML=`<h3>${esc(p.title)}</h3><div style="font-size:14px">${esc(p.desc)}</div>
+  <div style="margin:8px 0;font-size:16px"><b style="color:#c2416b;font-size:22px">$${p.usd.toFixed(2)}</b> ${p.was?`<s style="color:#a8999b">$${p.was.toFixed(2)}</s>`:""} · one-off, nothing renews</div>
+  <div class="disc">💗 <b>Please note:</b> ${esc(disclaimer)}</div>
+  <label><input type="checkbox" id="bok"> I'm 18 or older and I understand Rose is an AI influencer.</label>
+  <div class="pay"><button type="button" id="bcard" disabled>💳 Pay by card / Apple Pay / Google Pay</button><button type="button" class="c" id="bcry" disabled>🪙 Pay with crypto (USDC)</button></div>
+  <div class="small" style="margin-top:8px">Card payments are handled by Yoco and charged in South African rand at today's rate. <a href="refunds.html">Refunds</a> · <a href="terms.html">Terms</a></div>`;
+  buyEl.hidden=false;const ok=document.getElementById("bok"),bc=document.getElementById("bcard"),bx=document.getElementById("bcry");
+  ok.onchange=()=>{bc.disabled=bx.disabled=!ok.checked};
+  const adult=async()=>{if(st&&st.adult)return true;const r=await api("adult");show(r.state);return true};
+  bc.onclick=async()=>{await adult();bc.disabled=true;bc.textContent="Opening…";const r=await api("checkout",{plan:k});if(r.url)location.href=r.url;else{bc.disabled=false;bc.textContent="💳 Pay by card";alert(r.error||"Please try again.")}};
+  bx.onclick=async()=>{await adult();bx.disabled=true;const o=await api("crypto",{plan:k});if(!o.address){bx.disabled=false;return}cryptoPanel(p,o)}}
+function cryptoPanel(p,o){buyBody.innerHTML=`<h3>Pay with crypto 🪙</h3>
+  <div style="font-size:14px">Send <b>exactly ${o.usd.toFixed(2)} USDC</b> on the <b>Solana</b> network to:</div>
+  <div class="addr" id="addr">${esc(o.address)}</div><div class="pay"><button type="button" class="c" id="cp">Copy address</button></div>
+  <div class="small" style="margin-top:8px">Only USDC on Solana: other coins or networks can't be recovered. ${esc(p.title)} unlocks by itself a few minutes after the payment arrives. Order ${esc(o.id)}.</div>
+  <div class="pay"><button type="button" id="paid">I've paid 💕</button></div><div class="small" id="cst"></div>`;
+  document.getElementById("cp").onclick=e=>{navigator.clipboard&&navigator.clipboard.writeText(o.address);e.target.textContent="Copied ✓"};
+  document.getElementById("paid").onclick=async e=>{e.target.disabled=true;const cs=document.getElementById("cst");cs.textContent="Thank you! Watching for your payment… you can keep chatting, it unlocks by itself.";
+    await api("crypto_paid",{id:o.id});for(let i=0;i<120;i++){const r=await api("poll");if(r.state&&(r.state.album||r.state.plan==="gf")&&(p.key==="album"?r.state.album:r.state.plan==="gf")){show(r.state);owned();loadAlbum();cs.textContent="Payment received, thank you! 🌹 It's all yours.";return}await new Promise(z=>setTimeout(z,10000))}
+    cs.textContent="Still waiting for it to arrive. It unlocks automatically; if it takes long, message me starting with Support:"}}
+document.querySelectorAll("[data-buy]").forEach(x=>x.onclick=()=>buy(x.dataset.buy));
 const pillsEl=document.getElementById("pills"),ageEl=document.getElementById("age"),ok18=document.getElementById("ok18");
 const PILLS=[["Hi gorgeous 👋","Hi gorgeous 👋"],["Tell me about you","Tell me a bit about yourself 😊"],["Your Rose Garden? 🌹","Tell me about your Rose Garden 🌹"],["Long day…","I've had a long day 😮‍💨"]];
-function show(s){st=s;vipUi(s);if(s.adult)ageEl.hidden=true;
+function show(s){st=s;vipUi(s);owned();if(s.adult)ageEl.hidden=true;
   leftEl.textContent=!s.adult?"":s.paid?("Unlimited chat until "+new Date(s.paid_until*1000).toLocaleString([], {dateStyle:"medium",timeStyle:"short"})):(s.bonus>0?s.bonus+" extra messages left":(s.left+" free messages left today"))+" · AI companion"}
 function pills(on){pillsEl.innerHTML="";if(!on)return;PILLS.forEach(([l,msg])=>{const k=document.createElement("button");k.type="button";k.textContent=l;k.onclick=()=>{t.value=msg;send({preventDefault(){}})};pillsEl.appendChild(k)})}
 function fresh(on,greet){pills(on);if(!on)return;if(greet)return add("assistant",greet);
@@ -177,9 +257,10 @@ t.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefau
 t.addEventListener("input",()=>{t.style.height="auto";t.style.height=Math.min(t.scrollHeight,140)+"px"});
 document.querySelectorAll(".tile").forEach(a=>a.onclick=e=>{e.preventDefault();document.getElementById("chat").scrollIntoView({block:"start"});t.value=a.dataset.say+" ";t.focus();t.setSelectionRange(t.value.length,t.value.length)});
 document.getElementById("unlock").onclick=e=>{e.preventDefault();toPlans("Unlock my private album 🔒")};
-async function waitPaid(){const w=add("team","Thank you! Confirming your payment…");for(let i=0;i<40;i++){const r=await api("poll");if(r.state&&(r.state.paid||r.state.bonus>0)){w.textContent="Payment received, thank you! You're all set. Now, where were we? 🌹";show(r.state);loadAlbum();return}await new Promise(z=>setTimeout(z,3000))}w.textContent="Still waiting for the payment to confirm. If you were charged, it will unlock shortly; or ask for help by typing a message starting with Support:"}
+async function waitPaid(){const w=add("team","Thank you! Confirming your payment…");for(let i=0;i<40;i++){const r=await api("poll");if(r.state&&(r.state.paid||r.state.bonus>0||r.state.album)){w.textContent="Payment received, thank you! You're all set. Now, where were we? 🌹";show(r.state);loadAlbum();return}await new Promise(z=>setTimeout(z,3000))}w.textContent="Still waiting for the payment to confirm. If you were charged, it will unlock shortly; or ask for help by typing a message starting with Support:"}
 setInterval(async()=>{if(st&&st.paused){const r=await api("poll",{since:lastTs});(r.messages||[]).filter(m=>m.role==="team"&&m.ts>lastTs).forEach(m=>{add("team",m.text);lastTs=m.ts});show(r.state)}},20000);
-(async()=>{try{const r=await api("session",CODE?{c:CODE}:{});token=r.token;try{localStorage.setItem("rose_token",token)}catch(e){}plans=r.plans;offers=r.offers||{};
+(async()=>{try{const r=await api("session",{...(CODE?{c:CODE}:{}),...(LINK?{u:LINK}:{})});token=r.token;try{localStorage.setItem("rose_token",token)}catch(e){}plans=r.plans;offers=r.offers||{};products=r.products||[];disclaimer=r.disclaimer||"";crypto=r.crypto;owned();
+  if(LINK){history.replaceState(null,"","chat.html"+location.hash)}if(location.hash==="#album"||location.hash==="#gf"){const k=location.hash.slice(1);document.getElementById(k).scrollIntoView({block:"center"});setTimeout(()=>buy(k),400)}
   r.messages.forEach(m=>{add(m.role,m.text,m.url);lastTs=Math.max(lastTs,m.ts)});loadAlbum();show(r.state);
   if(!r.messages.length)fresh(true,r.welcome);else if(r.welcome)add("assistant",r.welcome);
   const q=new URLSearchParams(location.search);if(q.get("paid"))waitPaid();if(q.get("failed"))add("team","The payment didn't go through. Nothing was charged; you can try again any time.");
