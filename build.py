@@ -5,7 +5,7 @@ BOT = "https://t.me/EveningCompany_bot"
 UPDATED = "6 October 2026"
 PRICES = [("20 extra messages", "0.99", "50"), ("Full chat for 24 hours", "2.49", "125"),
           ("Monthly companion", "14.99", "750"), ("VIP companion (30 days)", "49.99", "2500"),
-          ("Complete photo album (card or crypto)", "124.99", "-"), ("VIP Girlfriend for a week (card or crypto)", "249", "-")]
+          ("Private photo album (card or crypto)", "9.99", "-"), ("Special photo request (card or crypto)", "24.99", "-"), ("Close Friends, 30 days (card or crypto)", "2.99", "-")]
 GALLERY = [("rose_48", "Red bikini days"), ("rose_55", "Turquoise water"), ("rose_47", "Coconut o'clock"),
            ("rose_52", "Sunbathing"), ("rose_43", "Pool float"), ("rose_37", "By the pool"), ("rose_45", "Sunset walks"), ("rose_42", "Beach reads")]
 
@@ -38,7 +38,7 @@ prices = "".join(f"<tr><td>{t}</td><td>${usd}</td><td>{stars + " ⭐" if stars !
 page("index.html", "Rose · AI companion for good conversation",
      "Rose is a warm, witty AI companion on Telegram. Good conversation any time of day. Adults 18+.", f"""
 <section class="newoffers" aria-label="New from Rose"><span class="tag">New 💗</span>
-<a href="chat.html#album"><img src="s/rose_48.jpg" alt=""><span><b>My private album</b> $9.99 <s>$124.99</s></span></a>
+<a href="chat.html#album"><img src="s/rose_48.jpg" alt=""><span><b>My private album</b> $9.99</span></a>
 <a href="chat.html#request"><img src="s/rose_52.jpg" alt=""><span><b>Special request</b> $24.99 · a photo made just for you</span></a>
 <a href="chat.html#close"><img src="s/rose_master.jpg" alt=""><span><b>Close Friends 💚</b> $2.99 · my cheekiest photos</span></a></section>
 <section class="hero"><img src="img/main.jpg" alt="Illustrated portrait of Rose in a bikini, an AI companion">
