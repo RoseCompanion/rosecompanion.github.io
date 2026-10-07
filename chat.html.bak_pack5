@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rose · Private messages</title><meta name="description" content="Rose's little corner of the internet. Coffee, mountains, karaoke and good conversation. Adults 18+.">
+<meta property="og:title" content="Rose"><meta property="og:description" content="Coffee, mountains, karaoke and good conversation. Come say hi. 18+.">
+<meta property="og:image" content="https://rosecompanion.github.io/img/hero.jpg">
+<link rel="icon" href="img/hero.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Lato:wght@400;700&family=Caveat:wght@600;700&family=Pacifico&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#ffffff;--soft:#fbf6f4;--line:#eee3df;--ink:#2b2226;--muted:#8a7b78;--accent:#c2416b;--accent2:#e8789a;--gold:#c9a27e}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 Lato,system-ui,sans-serif}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:url(img/watermark.jpg) center 70%/cover no-repeat;opacity:.13}
+a{color:var(--accent)}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px 40px}
+.top{display:flex;justify-content:space-between;align-items:center;padding:14px 0;font-size:13px;color:var(--muted)}
+.top b{font:700 18px "Libre Baskerville",Georgia,serif;color:var(--ink)}
+/* 1. Bio */
+.bio{display:flex;gap:22px;align-items:center;padding:8px 0 22px}
+.bio img{width:150px;height:150px;border-radius:50%;object-fit:cover;flex:none;box-shadow:0 0 0 4px #fff,0 0 0 6px var(--accent2),0 10px 30px rgba(194,65,107,.2)}
+.bio h1{font:700 30px "Libre Baskerville",Georgia,serif;margin:0}
+.bio .sub{color:var(--muted);font-size:14px}
+.bio p{margin:8px 0 0;font-style:italic}
+.status{font-size:13px;color:var(--muted);margin-top:4px}.status i{display:inline-block;width:8px;height:8px;border-radius:50%;background:#4caf6a;margin-right:6px}
+.card{background:rgba(255,255,255,.82);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);border:1px solid var(--line);border-radius:16px;box-shadow:0 4px 20px rgba(60,30,40,.06);overflow:hidden;margin-bottom:18px}
+.card h2{font:700 13px Lato,sans-serif;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);margin:0;padding:12px 16px;border-bottom:1px solid var(--line)}
+/* 2. Chat */
+#log{height:min(42vh,380px);overflow-y:auto;padding:14px;background:rgba(251,246,244,.7)}
+.m{max-width:80%;padding:9px 13px;margin:6px 0;white-space:pre-wrap;word-wrap:break-word;font-size:15px;border-radius:16px}
+.assistant{background:#fff;border:1px solid var(--line);border-bottom-left-radius:4px}
+.user{background:var(--accent);color:#fff;margin-left:auto;border-bottom-right-radius:4px}
+.team{background:transparent;color:var(--muted);font-size:13px;margin:10px auto;text-align:center;max-width:90%}
+.typing{color:var(--muted);font-style:italic;font-size:13.5px}
+#bar{border-top:1px solid var(--line);padding:10px 12px}
+.pills{display:flex;flex-wrap:wrap;gap:6px;font-size:13px;margin:0 0 8px}
+.pills button{background:var(--soft);border:1px solid var(--line);border-radius:14px;padding:4px 11px;color:var(--accent);font:13px Lato,sans-serif;cursor:pointer}
+#f{display:flex;gap:8px}
+#t{flex:1;resize:none;font:15px Lato,sans-serif;padding:10px 13px;border:1px solid var(--line);border-radius:20px;background:#fff;color:var(--ink);max-height:140px}
+#t:focus{outline:none;border-color:var(--accent2)}
+#b,.card .plans button{background:var(--accent);color:#fff;border:0;border-radius:20px;font:700 14px Lato,sans-serif;padding:9px 20px;cursor:pointer}
+#b:disabled{opacity:.5}
+.age{display:flex;gap:7px;align-items:center;flex-wrap:wrap;font-size:12.5px;color:var(--muted);margin-top:8px}
+.age[hidden]{display:none}.age input{accent-color:var(--accent)}.age.nudge{color:var(--ink);font-weight:700}
+.left{font-size:12px;color:var(--muted);margin-top:6px}
+#log .card{border:1px solid var(--accent2);background:#fff;padding:12px 14px;margin:12px 0;font-size:14px;border-radius:14px;box-shadow:none}
+#log .card h3{margin:0 0 4px;font:700 17px "Libre Baskerville",Georgia,serif}
+.plans{display:grid;gap:6px;margin-top:10px}.plans button{display:flex;justify-content:space-between;width:100%;text-align:left}
+.note{font-size:12px;color:var(--muted);margin-top:8px}
+.m.photo{padding:6px;max-width:300px}.m.photo img{width:100%;display:block;margin-bottom:6px;border-radius:12px}
+/* 3 + 4 */
+.split{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.split .card{margin:0;display:flex;flex-direction:column}
+.split .bd{padding:14px 16px;flex:1;display:flex;flex-direction:column}
+.hot{border:2px solid var(--accent2);box-shadow:0 8px 30px rgba(194,65,107,.18)}
+.hot h2{color:var(--accent);display:flex;justify-content:space-between}
+.cnt{font-size:11px;background:var(--soft);padding:1px 8px;border-radius:9px;letter-spacing:.5px}
+.car{position:relative;aspect-ratio:1;overflow:hidden;border-radius:12px;background:var(--soft)}
+.car img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .6s;filter:saturate(1.2)}
+.car img.on{opacity:1}
+.car .ov{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:12px 50px;background:linear-gradient(180deg,rgba(255,255,255,0),rgba(120,20,50,.45));color:#fff;text-align:center;cursor:pointer;text-shadow:0 1px 6px rgba(0,0,0,.4)}
+.car .ov[hidden]{display:none}
+.car .ov b{font:700 22px "Libre Baskerville",Georgia,serif}
+.lockicon{font-size:34px;animation:pulse 1.8s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
+.car .unl{margin-top:6px;background:var(--accent);color:#fff;border:0;border-radius:22px;font:700 15px Lato,sans-serif;padding:10px 22px;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.25);text-shadow:none}
+.car .nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.85);color:var(--ink);border:0;border-radius:50%;width:34px;height:34px;font-size:18px;cursor:pointer;z-index:2}
+.car .prev{left:8px}.car .next{right:8px}
+.car .cap{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(transparent,rgba(0,0,0,.6));color:#fff;font-size:12.5px;padding:18px 10px 8px;z-index:1}
+.dots{display:flex;gap:5px;justify-content:center;margin-top:8px}.dots i{width:7px;height:7px;border-radius:50%;background:var(--line)}.dots i.on{background:var(--accent)}
+.album-cta{margin-top:8px;font-size:12.5px;color:var(--muted);text-align:center}
+.vip{display:flex;flex-direction:column;gap:10px;height:100%}
+.vip .tg{display:flex;align-items:center;gap:10px;font-weight:700}
+.vip .tg span{width:38px;height:38px;border-radius:50%;background:#2aabee;color:#fff;display:flex;align-items:center;justify-content:center;font-size:19px}
+.vip ul{margin:0;padding-left:18px;font-size:14px}.vip li{margin:3px 0}
+.vip .gate{margin-top:auto;text-align:center;font-size:12.5px;color:var(--muted)}
+.vip .gate button{background:#2aabee;color:#fff;border:0;border-radius:22px;font:700 14px Lato,sans-serif;padding:11px 18px;cursor:pointer;width:100%;margin-top:8px}
+footer{font-size:12px;color:var(--muted);text-align:center;margin-top:22px}
+.choice{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+.choice button{border:1px solid var(--accent2);background:#fff;color:var(--accent);border-radius:16px;padding:6px 12px;font:700 13.5px Lato,sans-serif;cursor:pointer}
+.choice button[data-c=vault]{background:var(--accent);color:#fff;border-color:var(--accent)}
+#lightbox{position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:9;padding:16px}
+#lightbox img{max-width:100%;max-height:90vh;border-radius:12px}
+/* My Diary offers */
+.diary{position:relative;margin:4px 0 22px;border-radius:18px;overflow:hidden;border:1px solid #f3c6d6;box-shadow:0 10px 30px rgba(194,65,107,.14);
+  background:repeating-linear-gradient(#fff9fb 0 27px,#f6d9e4 27px 28px);}
+.diary::before{content:"";position:absolute;left:46px;top:0;bottom:0;width:2px;background:#f4a7bf;opacity:.7}
+.diary-head{position:relative;text-align:center;padding:22px 16px 10px 56px}
+.diary-head .tape{position:absolute;top:-6px;width:110px;height:26px;background:rgba(255,182,206,.75);transform:rotate(-6deg);left:18%;box-shadow:0 2px 4px rgba(0,0,0,.06)}
+.diary-head .tape.r{left:auto;right:16%;transform:rotate(5deg);background:rgba(201,162,126,.45)}
+.diary-head h2{font:400 34px Pacifico,cursive;color:#c2416b;margin:6px 0 0;letter-spacing:.5px;border:0;padding:0;text-transform:none}
+.diary-head p{font:700 21px Caveat,cursive;color:#7a4b5a;margin:2px 0 0}
+.diary-head .lock{font:700 12px Lato,sans-serif;letter-spacing:2px;color:#c9a27e;text-transform:uppercase}
+.hearts{position:absolute;right:16px;top:14px;font-size:20px;transform:rotate(12deg)}
+.offers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;padding:8px 16px 18px 58px}
+.offer{background:#fff;border:1px solid #f3c6d6;border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:8px;position:relative}
+.offer:nth-child(1){transform:rotate(-.6deg)}.offer:nth-child(2){transform:rotate(.6deg)}
+.offer .ph{display:grid;grid-template-columns:2fr 1fr;grid-template-rows:1fr 1fr;gap:4px;aspect-ratio:4/3;border-radius:10px;overflow:hidden}
+.offer .ph img{width:100%;height:100%;object-fit:cover}.offer .ph img:first-child{grid-row:span 2}
+.offer .ph .lk{position:relative;overflow:hidden;display:block}.offer .ph .lk img{filter:blur(9px) saturate(1.2);transform:scale(1.15)}
+.offer .ph .lk::after{content:"🔒";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:22px;background:rgba(194,65,107,.15)}
+.offer .ph.one{display:block}.offer .ph.one img{height:100%}
+.offer h3{font:700 25px Caveat,cursive;color:#2b2226;margin:0;line-height:1.1}
+.offer .d{font-size:13.5px;color:#5c4a4f}
+.offer .price{display:flex;align-items:baseline;gap:8px}.offer .price b{font:700 24px Lato,sans-serif;color:#c2416b}.offer .price s{color:#a8999b;font-size:15px}
+.offer .badge{position:absolute;top:-10px;right:10px;background:#c2416b;color:#fff;font:700 11px Lato,sans-serif;letter-spacing:.8px;padding:4px 9px;border-radius:10px;text-transform:uppercase}
+.offer button{margin-top:auto;background:linear-gradient(135deg,#e8789a,#c2416b);color:#fff;border:0;border-radius:22px;font:700 15px Lato,sans-serif;padding:11px;cursor:pointer}
+.offer.owned button{background:#4caf6a}
+.diary-foot{font:700 17px Caveat,cursive;color:#9b6b7a;text-align:center;padding:0 16px 14px 56px}
+#buy{position:fixed;inset:0;background:rgba(43,34,38,.55);display:flex;align-items:center;justify-content:center;z-index:20;padding:16px}
+#buy[hidden],.card[hidden]{display:none!important}
+#buy .box{background:#fff9fb;border-radius:18px;max-width:430px;width:100%;padding:20px;border:1px solid #f3c6d6;box-shadow:0 20px 50px rgba(0,0,0,.25);max-height:92vh;overflow:auto}
+#buy h3{font:700 28px Caveat,cursive;color:#c2416b;margin:0}
+#buy .disc{background:#fff;border:1px dashed #e8789a;border-radius:12px;padding:10px 12px;font-size:13.5px;margin:10px 0}
+#buy label{display:flex;gap:8px;font-size:13.5px;align-items:flex-start;margin:8px 0}#buy input{accent-color:#c2416b;margin-top:3px}
+#buy .pay{display:grid;gap:8px;margin-top:12px}
+#buy .pay button{border:0;border-radius:22px;font:700 15px Lato,sans-serif;padding:11px;cursor:pointer;background:#c2416b;color:#fff}
+#buy .pay button.c{background:#2b2226}
+#buy .pay button:disabled{opacity:.45;cursor:not-allowed}
+#buy .x{float:right;background:none;border:0;font-size:22px;cursor:pointer;color:#8a7b78}
+#buy .addr{font:13px/1.4 ui-monospace,monospace;background:#fff;border:1px solid #eee3df;border-radius:10px;padding:9px;word-break:break-all;margin:6px 0}
+#buy .small{font-size:12px;color:#8a7b78}
+@media (max-width:640px){.offers{grid-template-columns:1fr;padding-left:52px;padding-right:12px}.diary-head h2{font-size:28px}}
+@media (max-width:640px){.split{grid-template-columns:1fr}.top{display:none}.bio{gap:12px;padding:10px 0 12px}.bio img{width:72px;height:72px}.bio h1{font-size:21px}.bio .sub{font-size:12.5px}.bio p{font-size:13px;margin-top:4px}.status{font-size:12px}.card h2{padding:9px 14px}#log{height:max(170px,calc(100svh - 400px))}.pills{flex-wrap:nowrap;overflow-x:auto}.pills button{flex:none}}
+@media (prefers-reduced-motion:reduce){.lockicon{animation:none}}
+</style></head>
+<body><div class="wrap">
+<div class="top"><b>Rose</b></div>
+<section class="bio"><img src="img/main.jpg" alt="Rose on the beach"><div>
+<h1>Rose</h1><div class="sub">28 · beach girl, coffee lover, terrible singer 😉</div>
+<div class="status"><i></i>Online now · usually replies in seconds</div>
+<p>Sun on my skin and a good conversation… that's my happy place ☀️ I love a man who can make me laugh. Think you can? 😘</p>
+</div></section>
+<section class="card" id="chat"><h2>💬 Chat with me</h2>
+<div id="log" aria-live="polite"></div>
+<div id="bar"><div class="pills" id="pills"></div><form id="f"><textarea id="t" rows="1" placeholder="Write to Rose…" aria-label="Message"></textarea><button id="b">Send</button></form>
+<label class="age" id="age" hidden><input type="checkbox" id="ok18"> I'm 18 or older (required for payment) · Rose is an AI companion, friendly and never explicit</label><div class="left" id="left"></div></div>
+</section>
+<section class="diary" id="offers" aria-label="Rose's offers">
+<div class="diary-head"><span class="tape"></span><span class="tape r"></span><span class="hearts">💗</span>
+<div class="lock">🔒 private · keep out</div><h2>My Diary</h2><p>things I only share with my favourite people…</p></div>
+<div class="offers">
+<div class="offer" id="album"><span class="badge">Sale</span><div class="ph"><img src="s/rose_48.jpg" alt="Rose in a red bikini at the beach"><span class="lk"><img src="s/rose_55.jpg" alt="Locked photo"></span><span class="lk"><img src="s/rose_49.jpg" alt="Locked photo"></span></div>
+<h3>My complete photo album 📸</h3><div class="d">Every photo of me: beach days, bikinis, travel, cosy nights in and date night. Yours to keep, new photos added free.</div>
+<div class="price"><b>$124.99</b><s>$199.99</s></div><button type="button" data-buy="album">I want it 💕</button></div>
+<div class="offer" id="gf"><span class="badge">VIP</span><div class="ph"><img src="s/rose_55.jpg" alt="Rose in a turquoise bikini on a white beach"><span class="lk"><img src="s/rose_47.jpg" alt="Locked photo"></span><span class="lk"><img src="s/rose_45.jpg" alt="Locked photo"></span></div>
+<h3>VIP Girlfriend for a week 💖</h3><div class="d">A whole week where you're my favourite: unlimited chat and I remember everything about you, here, on Telegram, Facebook or Instagram. Good-morning and good-night messages, daily photos, and my complete album to keep.</div>
+<div class="price"><b>$249</b><span class="small">· album included</span></div><button type="button" data-buy="gf">Make me yours 😘</button></div>
+</div>
+<div class="diary-foot">xoxo, Rose 🌹 · card, Apple Pay, Google Pay or crypto (USDC) · 18+</div>
+</section>
+<div id="buy" hidden><div class="box"><button class="x" type="button" aria-label="Close">×</button><div id="buybody"></div></div></div>
+<div class="split">
+<section class="card hot" id="albumbox" hidden><h2>🌹 My Rose Garden <span class="cnt" id="albumcount"></span></h2><div class="bd">
+<div class="car" id="car"><button class="nav prev" aria-label="Previous photo">‹</button><button class="nav next" aria-label="Next photo">›</button><div class="cap" id="carcap"></div><div class="ov" id="carov"><span class="lockicon">🔒</span><b>Just for you…</b><span>My private photo vault. I don't post these anywhere else</span><button class="unl" type="button">Enter my Rose Garden</button></div></div>
+<div class="dots" id="dots"></div>
+<div class="album-cta" id="albumcta">New photos every week · from $14.99 · <a href="#" id="unlock">see plans</a></div>
+</div></section>
+<section class="card" id="vipbox" hidden><h2>VIP Telegram chat · 18+</h2><div class="bd"><div class="vip" id="vip">
+<div class="tg"><span>✈</span>Me, in your pocket</div>
+<ul><li>Our own private chat on Telegram</li><li>Unlimited messages, priority replies</li><li>I remember everything about you</li><li>A daily photo + my full private album</li></ul>
+<div class="gate" id="vipgate">$49.99 for 30 days · one-off, nothing renews · 18+<button id="vipbtn">Unlock VIP chat</button></div>
+</div></div></section>
+</div>
+<footer>Rose is an AI companion · photos are illustrations of her world · <a href="terms.html">terms</a> · <a href="privacy.html">privacy</a> · <a href="refunds.html">refunds</a></footer>
+</div>
+<script>
+const API="https://chat.sonneblomdigitaal.co.za/api/";
+const log=document.getElementById("log"),t=document.getElementById("t"),b=document.getElementById("b"),leftEl=document.getElementById("left");
+let token=null,st=null,plans=[],offers={},lastTs=0,products=[],disclaimer="",crypto=null;
+const OFFER=new URLSearchParams(location.search).get("offer"),CODE=new URLSearchParams(location.search).get("c"),LINK=new URLSearchParams(location.search).get("u");
+try{token=localStorage.getItem("rose_token")}catch(e){}
+async function api(p,d={}){const r=await fetch(API+p,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({token,...d})});return r.json()}
+function esc(s){const d=document.createElement("div");d.textContent=s;return d.innerHTML}
+function add(role,text,url){const d=document.createElement("div");d.className="m "+role;if(role==="photo"&&url){const i=document.createElement("img");i.src=url;i.alt="Photo from Rose";i.loading="lazy";i.onclick=()=>lightbox(url);d.appendChild(i);d.appendChild(document.createTextNode(text||""))}else d.innerHTML=esc(text);log.appendChild(d);log.scrollTop=log.scrollHeight;return d}
+function lightbox(url){const b=document.createElement("div");b.id="lightbox";b.innerHTML=`<img src="${url}" alt="Photo from Rose">`;b.onclick=()=>b.remove();document.body.appendChild(b)}
+function memberCard(title,vipOnly){const old=document.querySelector(".card.member");if(old){if(!vipOnly)return;old.remove()}const c=document.createElement("div");c.className="card member";
+  const pp=plans.filter(p=>vipOnly?p.key==="vip":(p.key==="month"||p.key==="vip"));
+  c.innerHTML=`<h3>${title}</h3>Members get unlimited chat, a daily photo from my day and the key to my Rose Garden, my private photo vault 🌹<div class="plans">${pp.map(p=>`<button data-k="${p.key}"><span>${esc(p.title)}</span><span>$${p.usd.toFixed(2)}</span></button>`).join("")}</div><div class="note">Pay by card, Apple Pay or Google Pay. Payments are handled securely by Yoco and charged in South African rand at today's rate; your bank converts it. One-off payment, nothing renews. <a href="refunds.html">Refunds</a>.</div>`;
+  c.querySelectorAll("button").forEach(x=>x.onclick=async()=>{if(!await ensureAdult())return;x.disabled=true;x.lastChild.textContent="Opening…";const r=await api("checkout",{plan:x.dataset.k});if(r.url)location.href=r.url;else{x.disabled=false;alertMsg(r.error||"Please try again.")}});
+  log.appendChild(c);log.scrollTop=log.scrollHeight}
+let car=[],ci=0,carT=null;
+function carShow(i){if(!car.length)return;ci=(i+car.length)%car.length;const car_=document.getElementById("car");
+  car_.querySelectorAll("img").forEach((im,k)=>im.classList.toggle("on",k===ci));document.querySelectorAll("#dots i").forEach((d,k)=>d.classList.toggle("on",k===ci));
+  document.getElementById("carcap").textContent=car[ci].full?car[ci].caption:""}
+function toPlans(title,vipOnly){document.getElementById("chat").scrollIntoView({block:"start"});memberCard(title,vipOnly)}
+async function loadAlbum(){try{const r=await api("album");car=r.items;document.getElementById("albumcount").textContent=car.length+" photos";const c=document.getElementById("car");c.querySelectorAll("img").forEach(x=>x.remove());
+  const dots=document.getElementById("dots");dots.innerHTML="";
+  const first=c.querySelector(".nav");car.forEach((it,k)=>{const im=document.createElement("img");im.src=it.full||it.blur;im.alt=it.full?it.caption:"Locked photo";c.insertBefore(im,first);dots.appendChild(document.createElement("i"))});
+  document.getElementById("albumbox").hidden=!r.unlocked;document.getElementById("carov").hidden=!!r.unlocked;document.getElementById("albumcta").hidden=!!r.unlocked;
+  document.getElementById("carov").onclick=()=>toPlans("Unlock my private album 🔒");
+  c.onclick=e=>{if(e.target.tagName==="IMG"&&car[ci].full)lightbox(car[ci].full)};
+  clearInterval(carT);carT=setInterval(()=>carShow(ci+1),3500);carShow(0)}catch(e){}}
+document.querySelector("#car .prev").onclick=e=>{e.stopPropagation();carShow(ci-1)};
+document.querySelector("#car .next").onclick=e=>{e.stopPropagation();carShow(ci+1)};
+function vipUi(s){const v=document.getElementById("vip"),g=document.getElementById("vipgate");const on=s&&s.paid&&(s.plan==="vip"||s.plan==="gf");v.classList.toggle("unlocked",on);document.getElementById("vipbox").hidden=!on;
+  if(on){g.innerHTML='✅ You\'re VIP 🌹<button id="tgbtn">Open my VIP chat on Telegram</button>';document.getElementById("tgbtn").onclick=async()=>{const r=await api("tglink");if(r.url)location.href=r.url;else alertMsg("Please try again in a moment.")}}}
+document.getElementById("vipbtn").onclick=async()=>{if(!await ensureAdult()){document.getElementById("chat").scrollIntoView({block:"start"});return}toPlans("Join VIP 🌹",true)};
+function paywall(){if(document.querySelector(".card"))return;const c=document.createElement("div");c.className="card";
+  c.innerHTML=`<h3>That's your free messages for today</h3>They reset tomorrow, or keep chatting now:<div class="plans">${plans.map(p=>`<button data-k="${p.key}"><span>${esc(p.title)}</span><span>$${p.usd.toFixed(2)}</span></button>`).join("")}</div><div class="note">Pay by card, Apple Pay or Google Pay. Payments are handled securely by Yoco and charged in South African rand at today's rate; your bank converts it. One-off payment, nothing renews. <a href="refunds.html">Refunds</a>.</div>`;
+  c.querySelectorAll("button").forEach(x=>x.onclick=async()=>{if(!await ensureAdult())return;x.disabled=true;x.lastChild.textContent="Opening…";const r=await api("checkout",{plan:x.dataset.k});if(r.url)location.href=r.url;else{x.disabled=false;alertMsg(r.error||"Please try again.")}});
+  log.appendChild(c);log.scrollTop=log.scrollHeight}
+function offerCard(){const o=offers[OFFER];if(!o||!st)return;
+  if(st.paid&&st.plan==="vip"){add("team","You're already a VIP. Thank you! 🌹");return}
+  const c=document.createElement("div");c.className="card";
+  c.innerHTML=`<h3>🌹 ${esc(o.title)}: $${o.usd.toFixed(2)}</h3>${o.days} days of priority replies, longer conversations and Rose's best memory.<div class="plans"><button><span>Get VIP access</span><span>$${o.usd.toFixed(2)}</span></button></div><div class="note">Pay by card, Apple Pay or Google Pay. Payments are handled securely by Yoco and charged in South African rand at today's rate; your bank converts it. One-off payment, nothing renews. VIP unlocks in this chat, on this device. <a href="refunds.html">Refunds</a>.</div>`;
+  const x=c.querySelector("button");x.onclick=async()=>{if(!await ensureAdult())return;x.disabled=true;x.lastChild.textContent="Opening…";const r=await api("checkout",{offer:OFFER});if(r.url)location.href=r.url;else{x.disabled=false;x.lastChild.textContent="$"+o.usd.toFixed(2);alertMsg(r.error||"Please try again.")}};
+  log.appendChild(c);log.scrollTop=log.scrollHeight}
+function alertMsg(s){add("team",s)}
+const buyEl=document.getElementById("buy"),buyBody=document.getElementById("buybody");
+buyEl.querySelector(".x").onclick=()=>{buyEl.hidden=true};buyEl.onclick=e=>{if(e.target===buyEl)buyEl.hidden=true};
+function owned(){if(!st)return;const a=document.getElementById("album"),g=document.getElementById("gf");
+  if(st.album){a.classList.add("owned");a.querySelector("button").textContent="✅ Yours: open the album"}
+  if(st.paid&&st.plan==="gf"){g.classList.add("owned");g.querySelector("button").textContent="✅ You're my VIP this week 💖"}}
+function buy(k){const p=products.find(x=>x.key===k);if(!p)return;
+  if(k==="album"&&st&&st.album){buyEl.hidden=true;document.getElementById("albumbox").scrollIntoView({block:"center"});return}
+  buyBody.innerHTML=`<h3>${esc(p.title)}</h3><div style="font-size:14px">${esc(p.desc)}</div>
+  <div style="margin:8px 0;font-size:16px"><b style="color:#c2416b;font-size:22px">$${p.usd.toFixed(2)}</b> ${p.was?`<s style="color:#a8999b">$${p.was.toFixed(2)}</s>`:""} · one-off, nothing renews</div>
+  <div class="disc">💗 <b>Please note:</b> ${esc(disclaimer)}</div>
+  <label><input type="checkbox" id="bok"> I'm 18 or older and I understand Rose is an AI influencer.</label>
+  <div class="pay"><button type="button" id="bcard" disabled>💳 Pay by card / Apple Pay / Google Pay</button><button type="button" class="c" id="bcry" disabled>🪙 Pay with crypto (USDC)</button></div>
+  <div class="small" style="margin-top:8px">Card payments are handled by Yoco and charged in South African rand at today's rate. <a href="refunds.html">Refunds</a> · <a href="terms.html">Terms</a></div>`;
+  buyEl.hidden=false;const ok=document.getElementById("bok"),bc=document.getElementById("bcard"),bx=document.getElementById("bcry");
+  ok.onchange=()=>{bc.disabled=bx.disabled=!ok.checked};
+  const adult=async()=>{if(st&&st.adult)return true;const r=await api("adult");show(r.state);return true};
+  bc.onclick=async()=>{await adult();bc.disabled=true;bc.textContent="Opening…";const r=await api("checkout",{plan:k});if(r.url)location.href=r.url;else{bc.disabled=false;bc.textContent="💳 Pay by card";alert(r.error||"Please try again.")}};
+  bx.onclick=async()=>{await adult();bx.disabled=true;const o=await api("crypto",{plan:k});if(!o.address){bx.disabled=false;return}cryptoPanel(p,o)}}
+function cryptoPanel(p,o){buyBody.innerHTML=`<h3>Pay with crypto 🪙</h3>
+  <div style="font-size:14px">Send <b>exactly ${o.usd.toFixed(2)} USDC</b> on the <b>Solana</b> network to:</div>
+  <div class="addr" id="addr">${esc(o.address)}</div><div class="pay"><button type="button" class="c" id="cp">Copy address</button></div>
+  <div class="small" style="margin-top:8px">Only USDC on Solana: other coins or networks can't be recovered. ${esc(p.title)} unlocks by itself a few minutes after the payment arrives. Order ${esc(o.id)}.</div>
+  <div class="pay"><button type="button" id="paid">I've paid 💕</button></div><div class="small" id="cst"></div>`;
+  document.getElementById("cp").onclick=e=>{navigator.clipboard&&navigator.clipboard.writeText(o.address);e.target.textContent="Copied ✓"};
+  document.getElementById("paid").onclick=async e=>{e.target.disabled=true;const cs=document.getElementById("cst");cs.textContent="Thank you! Watching for your payment… you can keep chatting, it unlocks by itself.";
+    await api("crypto_paid",{id:o.id});for(let i=0;i<120;i++){const r=await api("poll");if(r.state&&(r.state.album||r.state.plan==="gf")&&(p.key==="album"?r.state.album:r.state.plan==="gf")){show(r.state);owned();loadAlbum();cs.textContent="Payment received, thank you! 🌹 It's all yours.";return}await new Promise(z=>setTimeout(z,10000))}
+    cs.textContent="Still waiting for it to arrive. It unlocks automatically; if it takes long, message me starting with Support:"}}
+document.querySelectorAll("[data-buy]").forEach(x=>x.onclick=()=>buy(x.dataset.buy));
+const pillsEl=document.getElementById("pills"),ageEl=document.getElementById("age"),ok18=document.getElementById("ok18");
+const PILLS=[["Hi gorgeous 👋","Hi gorgeous 👋"],["Tell me about you","Tell me a bit about yourself 😊"],["Your Rose Garden? 🌹","Tell me about your Rose Garden 🌹"],["Long day…","I've had a long day 😮‍💨"]];
+function show(s){st=s;vipUi(s);owned();if(s.adult)ageEl.hidden=true;
+  leftEl.textContent=!s.adult?"":s.paid?("Unlimited chat until "+new Date(s.paid_until*1000).toLocaleString([], {dateStyle:"medium",timeStyle:"short"})):(s.bonus>0?s.bonus+" extra messages left":(s.left+" free messages left today"))+" · AI companion"}
+function pills(on){pillsEl.innerHTML="";if(!on)return;PILLS.forEach(([l,msg])=>{const k=document.createElement("button");k.type="button";k.textContent=l;k.onclick=()=>{t.value=msg;send({preventDefault(){}})};pillsEl.appendChild(k)})}
+function fresh(on,greet){pills(on);if(!on)return;if(greet)return add("assistant",greet);
+  const d=document.createElement("div");d.className="m assistant";
+  d.innerHTML='Hi there, I\'m Rose 🌹 Glad you found my corner. Do you want to chat with me personally, or do you want <b>access to my private photo vault</b> (my Rose Garden)?<div class="choice"><button type="button" data-c="chat">💬 Chat with you</button><button type="button" data-c="vault">🌹 My Rose Garden</button></div>';
+  d.querySelector('[data-c=chat]').onclick=()=>{d.querySelector(".choice").remove();t.value="I'd love to chat with you personally 😊";send({preventDefault(){}})};
+  d.querySelector('[data-c=vault]').onclick=()=>{d.querySelector(".choice").remove();memberCard("Welcome to my Rose Garden 🌹");document.getElementById("offers").scrollIntoView({block:"nearest"})};
+  log.appendChild(d)}
+async function ensureAdult(){if(st&&st.adult)return true;
+  if(!ok18.checked){ageEl.hidden=false;ageEl.classList.add("nudge");document.getElementById("bar").scrollIntoView({block:"center"});ok18.focus();add("team","Before paying, please tick the box below to confirm you're 18 or older.");return false}
+  const r=await api("adult");show(r.state);offerCard();return true}
+ok18.onchange=()=>ageEl.classList.remove("nudge");
+async function send(e){e.preventDefault();const text=t.value.trim();if(!text)return;
+  pills(false);
+  t.value="";t.style.height="auto";add("user",text);b.disabled=true;const ty=add("assistant typing","Rose is typing…");
+  try{const r=await api("send",{text});ty.remove();(r.messages||[]).forEach(m=>add(m.role,m.text,m.url));if(r.paywall)paywall();if(r.offer)memberCard("Loving our chat? 🌹");if(r.state)show(r.state);if(r.error==="slow down")add("team","One moment, then try again.")}
+  catch(err){ty.remove();add("team","Connection hiccup. Please try again.")}
+  b.disabled=false;t.focus()}
+document.getElementById("f").onsubmit=send;
+t.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();send(e)}});
+t.addEventListener("input",()=>{t.style.height="auto";t.style.height=Math.min(t.scrollHeight,140)+"px"});
+document.querySelectorAll(".tile").forEach(a=>a.onclick=e=>{e.preventDefault();document.getElementById("chat").scrollIntoView({block:"start"});t.value=a.dataset.say+" ";t.focus();t.setSelectionRange(t.value.length,t.value.length)});
+document.getElementById("unlock").onclick=e=>{e.preventDefault();toPlans("Unlock my private album 🔒")};
+async function waitPaid(){const w=add("team","Thank you! Confirming your payment…");for(let i=0;i<40;i++){const r=await api("poll");if(r.state&&(r.state.paid||r.state.bonus>0||r.state.album)){w.textContent="Payment received, thank you! You're all set. Now, where were we? 🌹";show(r.state);loadAlbum();return}await new Promise(z=>setTimeout(z,3000))}w.textContent="Still waiting for the payment to confirm. If you were charged, it will unlock shortly; or ask for help by typing a message starting with Support:"}
+setInterval(async()=>{if(st&&st.paused){const r=await api("poll",{since:lastTs});(r.messages||[]).filter(m=>m.role==="team"&&m.ts>lastTs).forEach(m=>{add("team",m.text);lastTs=m.ts});show(r.state)}},20000);
+(async()=>{try{const r=await api("session",{...(CODE?{c:CODE}:{}),...(LINK?{u:LINK}:{})});token=r.token;try{localStorage.setItem("rose_token",token)}catch(e){}plans=r.plans;offers=r.offers||{};products=r.products||[];disclaimer=r.disclaimer||"";crypto=r.crypto;owned();
+  if(LINK){history.replaceState(null,"","chat.html"+location.hash)}if(location.hash==="#album"||location.hash==="#gf"){const k=location.hash.slice(1);document.getElementById(k).scrollIntoView({block:"center"});setTimeout(()=>buy(k),400)}
+  r.messages.forEach(m=>{add(m.role,m.text,m.url);lastTs=Math.max(lastTs,m.ts)});loadAlbum();show(r.state);
+  if(!r.messages.length)fresh(true,r.welcome);else if(r.welcome)add("assistant",r.welcome);
+  const q=new URLSearchParams(location.search);if(q.get("paid"))waitPaid();if(q.get("failed"))add("team","The payment didn't go through. Nothing was charged; you can try again any time.");
+  if(q.has("paid")||q.has("failed"))history.replaceState(null,"","chat.html");else offerCard();
+  if(!r.state.paid&&r.state.left===0&&r.state.bonus===0)paywall()}
+  catch(e){add("team","Rose can't connect right now. Please try again in a minute.")}})();
+</script></body></html>
