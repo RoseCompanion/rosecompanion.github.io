@@ -121,14 +121,6 @@ footer{font-size:12px;color:var(--muted);text-align:center;margin-top:22px}
 @media (max-width:640px){.offers{grid-template-columns:1fr;padding-left:52px;padding-right:12px}.diary-head h2{font-size:28px}}
 @media (max-width:640px){.split{grid-template-columns:1fr}.top{display:none}.bio{gap:12px;padding:10px 0 12px}.bio img{width:72px;height:72px}.bio h1{font-size:21px}.bio .sub{font-size:12.5px}.bio p{font-size:13px;margin-top:4px}.status{font-size:12px}.card h2{padding:9px 14px}#log{height:max(170px,calc(100svh - 400px))}.pills{flex-wrap:nowrap;overflow-x:auto}.pills button{flex:none}}
 @media (prefers-reduced-motion:reduce){.lockicon{animation:none}}
-.cf{margin:4px 0 22px;border-radius:18px;border:2px solid #1db954;background:linear-gradient(180deg,#f2fff6,#fff);padding:16px;box-shadow:0 10px 30px rgba(29,185,84,.15)}
-.cf h2{margin:0;color:#14883d;font:800 22px Lato,sans-serif;display:flex;align-items:center;gap:8px}.cf h2 .star{background:#1db954;color:#fff;border-radius:50%;width:30px;height:30px;display:inline-grid;place-items:center;font-size:16px}
-.cf .sub{color:#4b6b55;font-size:14px;margin:4px 0 12px}.cfgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
-.cfgrid figure{margin:0;position:relative;aspect-ratio:4/5;border-radius:10px;overflow:hidden;background:#dfe}.cfgrid img{width:100%;height:100%;object-fit:cover;display:block;cursor:pointer}
-.cfgrid figcaption{position:absolute;left:0;right:0;bottom:0;padding:4px 6px;font-size:11px;color:#fff;background:linear-gradient(transparent,#0008)}
-.cfgrid .lk{position:absolute;inset:0;display:grid;place-items:center;font-size:26px;text-shadow:0 2px 8px #0006}
-.cf .go{margin-top:12px;width:100%;border:0;border-radius:12px;padding:13px;background:#1db954;color:#fff;font:800 16px Lato,sans-serif;cursor:pointer}
-@media (max-width:520px){.cfgrid{grid-template-columns:repeat(2,1fr)}}
 </style></head>
 <body><div class="wrap">
 <div class="top"><b>Rose</b></div>
@@ -155,10 +147,6 @@ footer{font-size:12px;color:var(--muted);text-align:center;margin-top:22px}
 </div>
 <div class="diary-foot">xoxo, Rose 🌹 · card, Apple Pay, Google Pay or crypto (USDC) · 18+</div>
 </section>
-<section class="cf" id="close" aria-label="Close Friends"><h2><span class="star">★</span>Close Friends</h2>
-<div class="sub" id="cfsub">My cheekiest photos, only for my close friends. New ones added regularly · <b>$2.99</b> for 30 days</div>
-<div class="cfgrid" id="cfgrid"></div>
-<button class="go" type="button" id="cfgo" data-buy="close">Add me to Close Friends 💚 $2.99</button></section>
 <div id="buy" hidden><div class="box"><button class="x" type="button" aria-label="Close">×</button><div id="buybody"></div></div></div>
 <div class="split">
 <section class="card hot" id="albumbox" hidden><h2>🌹 My Rose Garden <span class="cnt" id="albumcount"></span></h2><div class="bd">
@@ -194,11 +182,6 @@ function carShow(i){if(!car.length)return;ci=(i+car.length)%car.length;const car
   car_.querySelectorAll("img").forEach((im,k)=>im.classList.toggle("on",k===ci));document.querySelectorAll("#dots i").forEach((d,k)=>d.classList.toggle("on",k===ci));
   document.getElementById("carcap").textContent=car[ci].full?car[ci].caption:""}
 function toPlans(title,vipOnly){document.getElementById("chat").scrollIntoView({block:"start"});memberCard(title,vipOnly)}
-async function loadClose(){try{const r=await api("close");const g=document.getElementById("cfgrid");g.innerHTML="";
-  r.items.forEach(it=>{const f=document.createElement("figure");const i=document.createElement("img");i.loading="lazy";i.alt="Close Friends photo of Rose";i.src=it.full||it.blur;
-    if(it.full)i.onclick=()=>lightbox(it.full);else i.onclick=()=>buy("close");f.appendChild(i);if(!it.full){const l=document.createElement("span");l.className="lk";l.textContent="🔒";f.appendChild(l)}
-    const c=document.createElement("figcaption");c.textContent=it.caption;f.appendChild(c);g.appendChild(f)});
-  const b=document.getElementById("cfgo");if(r.subscribed){b.textContent="💚 You're on my Close Friends list until "+new Date(r.until*1000).toLocaleDateString();b.disabled=!r.until}}catch(e){}}
 async function loadAlbum(){try{const r=await api("album");car=r.items;document.getElementById("albumcount").textContent=car.length+" photos";const c=document.getElementById("car");c.querySelectorAll("img").forEach(x=>x.remove());
   const dots=document.getElementById("dots");dots.innerHTML="";
   const first=c.querySelector(".nav");car.forEach((it,k)=>{const im=document.createElement("img");im.src=it.full||it.blur;im.alt=it.full?it.caption:"Locked photo";c.insertBefore(im,first);dots.appendChild(document.createElement("i"))});
@@ -228,7 +211,6 @@ function owned(){if(!st)return;const a=document.getElementById("album"),rq=docum
   if(st.album||st.pack){a.classList.add("owned");a.querySelector("button").textContent="✅ Yours: open the album"}
   if(st.req){rq.classList.add("owned");rq.querySelector("button").textContent="✅ Paid: type your wish in the chat 💌"}}
 function buy(k){const p=products.find(x=>x.key===k);if(!p)return;
-  if(k==="close"&&st&&st.close){buyEl.hidden=true;document.getElementById("close").scrollIntoView({block:"center"});return}
   if((k==="album"&&st&&st.album)||(k==="pack5"&&st&&(st.pack||st.album))){buyEl.hidden=true;document.getElementById("albumbox").scrollIntoView({block:"center"});return}
   buyBody.innerHTML=`<h3>${esc(p.title)}</h3><div style="font-size:14px">${esc(p.desc)}</div>
   <div style="margin:8px 0;font-size:16px"><b style="color:#c2416b;font-size:22px">$${p.usd.toFixed(2)}</b> ${p.was?`<s style="color:#a8999b">$${p.was.toFixed(2)}</s>`:""} · one-off, nothing renews</div>
@@ -248,7 +230,7 @@ function cryptoPanel(p,o){buyBody.innerHTML=`<h3>Pay with crypto 🪙</h3>
   <div class="pay"><button type="button" id="paid">I've paid 💕</button></div><div class="small" id="cst"></div>`;
   document.getElementById("cp").onclick=e=>{navigator.clipboard&&navigator.clipboard.writeText(o.address);e.target.textContent="Copied ✓"};
   document.getElementById("paid").onclick=async e=>{e.target.disabled=true;const cs=document.getElementById("cst");cs.textContent="Thank you! Watching for your payment… you can keep chatting, it unlocks by itself.";
-    await api("crypto_paid",{id:o.id});for(let i=0;i<120;i++){const r=await api("poll");if(r.state&&(p.key==="close"?r.state.close:p.key==="request"?r.state.req:p.key==="pack5"?r.state.pack:p.key==="album"?r.state.album:r.state.plan==="gf")){show(r.state);owned();loadAlbum();loadClose();cs.textContent="Payment received, thank you! 🌹 It's all yours.";return}await new Promise(z=>setTimeout(z,10000))}
+    await api("crypto_paid",{id:o.id});for(let i=0;i<120;i++){const r=await api("poll");if(r.state&&(p.key==="request"?r.state.req:p.key==="pack5"?r.state.pack:p.key==="album"?r.state.album:r.state.plan==="gf")){show(r.state);owned();loadAlbum();cs.textContent="Payment received, thank you! 🌹 It's all yours.";return}await new Promise(z=>setTimeout(z,10000))}
     cs.textContent="Still waiting for it to arrive. It unlocks automatically; if it takes long, message me starting with Support:"}}
 document.querySelectorAll("[data-buy]").forEach(x=>x.onclick=()=>buy(x.dataset.buy));
 const pillsEl=document.getElementById("pills"),ageEl=document.getElementById("age"),ok18=document.getElementById("ok18");
@@ -277,11 +259,11 @@ t.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefau
 t.addEventListener("input",()=>{t.style.height="auto";t.style.height=Math.min(t.scrollHeight,140)+"px"});
 document.querySelectorAll(".tile").forEach(a=>a.onclick=e=>{e.preventDefault();document.getElementById("chat").scrollIntoView({block:"start"});t.value=a.dataset.say+" ";t.focus();t.setSelectionRange(t.value.length,t.value.length)});
 document.getElementById("unlock").onclick=e=>{e.preventDefault();toPlans("Unlock my private album 🔒")};
-async function waitPaid(){const w=add("team","Thank you! Confirming your payment…");for(let i=0;i<40;i++){const r=await api("poll");if(r.state&&(r.state.paid||r.state.bonus>0||r.state.album||r.state.pack)){w.textContent="Payment received, thank you! You're all set. Now, where were we? 🌹";show(r.state);loadAlbum();loadClose();return}await new Promise(z=>setTimeout(z,3000))}w.textContent="Still waiting for the payment to confirm. If you were charged, it will unlock shortly; or ask for help by typing a message starting with Support:"}
+async function waitPaid(){const w=add("team","Thank you! Confirming your payment…");for(let i=0;i<40;i++){const r=await api("poll");if(r.state&&(r.state.paid||r.state.bonus>0||r.state.album||r.state.pack)){w.textContent="Payment received, thank you! You're all set. Now, where were we? 🌹";show(r.state);loadAlbum();return}await new Promise(z=>setTimeout(z,3000))}w.textContent="Still waiting for the payment to confirm. If you were charged, it will unlock shortly; or ask for help by typing a message starting with Support:"}
 setInterval(async()=>{if(st&&st.paused){const r=await api("poll",{since:lastTs});(r.messages||[]).filter(m=>m.role==="team"&&m.ts>lastTs).forEach(m=>{add("team",m.text);lastTs=m.ts});show(r.state)}},20000);
 (async()=>{try{const r=await api("session",{...(CODE?{c:CODE}:{}),...(LINK?{u:LINK}:{})});token=r.token;try{localStorage.setItem("rose_token",token)}catch(e){}plans=r.plans;offers=r.offers||{};products=r.products||[];disclaimer=r.disclaimer||"";crypto=r.crypto;owned();
-  if(LINK){history.replaceState(null,"","chat.html"+location.hash)}if(location.hash==="#album"||location.hash==="#request"||location.hash==="#close"||location.hash==="#gf"||location.hash==="#pack5"){const k={gf:"request",pack5:"album"}[location.hash.slice(1)]||location.hash.slice(1);document.getElementById(k).scrollIntoView({block:"center"});setTimeout(()=>buy(k),400)}
-  r.messages.forEach(m=>{add(m.role,m.text,m.url);lastTs=Math.max(lastTs,m.ts)});loadAlbum();loadClose();show(r.state);
+  if(LINK){history.replaceState(null,"","chat.html"+location.hash)}if(location.hash==="#album"||location.hash==="#request"||location.hash==="#gf"||location.hash==="#pack5"){const k={gf:"request",pack5:"album"}[location.hash.slice(1)]||location.hash.slice(1);document.getElementById(k).scrollIntoView({block:"center"});setTimeout(()=>buy(k),400)}
+  r.messages.forEach(m=>{add(m.role,m.text,m.url);lastTs=Math.max(lastTs,m.ts)});loadAlbum();show(r.state);
   if(!r.messages.length)fresh(true,r.welcome);else if(r.welcome)add("assistant",r.welcome);
   const q=new URLSearchParams(location.search);if(q.get("paid"))waitPaid();if(q.get("failed"))add("team","The payment didn't go through. Nothing was charged; you can try again any time.");
   if(q.has("paid")||q.has("failed"))history.replaceState(null,"","chat.html");else offerCard();
