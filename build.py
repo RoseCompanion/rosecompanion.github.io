@@ -38,8 +38,8 @@ prices = "".join(f"<tr><td>{t}</td><td>${usd}</td><td>{stars + " ⭐" if stars !
 page("index.html", "Rose · AI companion for good conversation",
      "Rose is a warm, witty AI companion on Telegram. Good conversation any time of day. Adults 18+.", f"""
 <section class="newoffers" aria-label="New from Rose"><span class="tag">New 💗</span>
-<a href="chat.html#album"><img src="s/rose_48.jpg" alt=""><span><b>My complete photo album</b> $124.99 <s>$199.99</s></span></a>
-<a href="chat.html#gf"><img src="s/rose_52.jpg" alt=""><span><b>VIP Girlfriend for a week</b> $249 · album included</span></a></section>
+<a href="chat.html#album"><img src="s/rose_48.jpg" alt=""><span><b>My private album</b> $9.99 <s>$124.99</s></span></a>
+<a href="chat.html#request"><img src="s/rose_52.jpg" alt=""><span><b>Special request</b> $24.99 · a photo made just for you</span></a></section>
 <section class="hero"><img src="img/main.jpg" alt="Illustrated portrait of Rose in a bikini, an AI companion">
 <div><h1>Chat with Rose</h1>
 <p class="lead">A warm, witty companion who's always up for a proper conversation, any time of day. Tell her about your

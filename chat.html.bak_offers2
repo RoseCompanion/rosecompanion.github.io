@@ -138,12 +138,15 @@ footer{font-size:12px;color:var(--muted);text-align:center;margin-top:22px}
 <div class="diary-head"><span class="tape"></span><span class="tape r"></span><span class="hearts">💗</span>
 <div class="lock">🔒 private · keep out</div><h2>My Diary</h2><p>things I only share with my favourite people…</p></div>
 <div class="offers">
+<div class="offer" id="pack5"><span class="badge">New</span><div class="ph"><img src="s/rose_45.jpg" alt="Rose walking along the shoreline"><span class="lk"><img src="s/rose_48.jpg" alt="Locked photo"></span><span class="lk"><img src="s/rose_49.jpg" alt="Locked photo"></span></div>
+<h3>5 private photos 🌹</h3><div class="d">Five of my favourite private beach and bikini photos, just for you. Yours to keep.</div>
+<div class="price"><b>$9.99</b><span class="small">· one-off</span></div><button type="button" data-buy="pack5">Show me 😘</button></div>
 <div class="offer" id="album"><span class="badge">Sale</span><div class="ph"><img src="s/rose_48.jpg" alt="Rose in a red bikini at the beach"><span class="lk"><img src="s/rose_55.jpg" alt="Locked photo"></span><span class="lk"><img src="s/rose_49.jpg" alt="Locked photo"></span></div>
-<h3>My private album 📸</h3><div class="d">All my private beach and bikini photos, just for you. Yours to keep, new photos added free.</div>
-<div class="price"><b>$9.99</b><s>$124.99</s></div><button type="button" data-buy="album">Show me 😘</button></div>
-<div class="offer" id="request"><span class="badge">Just for you</span><div class="ph"><img src="s/rose_52.jpg" alt="Rose sunbathing in a yellow bikini"><span class="lk"><img src="s/rose_47.jpg" alt="Locked photo"></span><span class="lk"><img src="s/rose_43.jpg" alt="Locked photo"></span></div>
-<h3>Special request 💌</h3><div class="d">Tell me the photo you'd love: the bikini, the place, the pose. I'll make it just for you, delivered right here within 24 hours. Every request is checked by my team: cheeky yes, nudity never 😉</div>
-<div class="price"><b>$24.99</b><span class="small">· one photo, made for you</span></div><button type="button" data-buy="request">Make my wish 😍</button></div>
+<h3>My complete photo album 📸</h3><div class="d">Every photo of me: beach days, bikinis, travel, cosy nights in and date night. Yours to keep, new photos added free.</div>
+<div class="price"><b>$124.99</b><s>$199.99</s></div><button type="button" data-buy="album">I want it 💕</button></div>
+<div class="offer" id="gf"><span class="badge">VIP</span><div class="ph"><img src="s/rose_55.jpg" alt="Rose in a turquoise bikini on a white beach"><span class="lk"><img src="s/rose_47.jpg" alt="Locked photo"></span><span class="lk"><img src="s/rose_45.jpg" alt="Locked photo"></span></div>
+<h3>VIP Girlfriend for a week 💖</h3><div class="d">A whole week where you're my favourite: unlimited chat and I remember everything about you, here, on Telegram, Facebook or Instagram. Good-morning and good-night messages, daily photos, and my complete album to keep.</div>
+<div class="price"><b>$249</b><span class="small">· album included</span></div><button type="button" data-buy="gf">Make me yours 😘</button></div>
 </div>
 <div class="diary-foot">xoxo, Rose 🌹 · card, Apple Pay, Google Pay or crypto (USDC) · 18+</div>
 </section>
@@ -207,9 +210,10 @@ function offerCard(){const o=offers[OFFER];if(!o||!st)return;
 function alertMsg(s){add("team",s)}
 const buyEl=document.getElementById("buy"),buyBody=document.getElementById("buybody");
 buyEl.querySelector(".x").onclick=()=>{buyEl.hidden=true};buyEl.onclick=e=>{if(e.target===buyEl)buyEl.hidden=true};
-function owned(){if(!st)return;const a=document.getElementById("album"),rq=document.getElementById("request");
-  if(st.album||st.pack){a.classList.add("owned");a.querySelector("button").textContent="✅ Yours: open the album"}
-  if(st.req){rq.classList.add("owned");rq.querySelector("button").textContent="✅ Paid: type your wish in the chat 💌"}}
+function owned(){if(!st)return;const a=document.getElementById("album"),g=document.getElementById("gf"),pk=document.getElementById("pack5");
+  if(st.pack||st.album){pk.classList.add("owned");pk.querySelector("button").textContent="✅ Yours: open my photos"}
+  if(st.album){a.classList.add("owned");a.querySelector("button").textContent="✅ Yours: open the album"}
+  if(st.paid&&st.plan==="gf"){g.classList.add("owned");g.querySelector("button").textContent="✅ You're my VIP this week 💖"}}
 function buy(k){const p=products.find(x=>x.key===k);if(!p)return;
   if((k==="album"&&st&&st.album)||(k==="pack5"&&st&&(st.pack||st.album))){buyEl.hidden=true;document.getElementById("albumbox").scrollIntoView({block:"center"});return}
   buyBody.innerHTML=`<h3>${esc(p.title)}</h3><div style="font-size:14px">${esc(p.desc)}</div>
@@ -230,7 +234,7 @@ function cryptoPanel(p,o){buyBody.innerHTML=`<h3>Pay with crypto 🪙</h3>
   <div class="pay"><button type="button" id="paid">I've paid 💕</button></div><div class="small" id="cst"></div>`;
   document.getElementById("cp").onclick=e=>{navigator.clipboard&&navigator.clipboard.writeText(o.address);e.target.textContent="Copied ✓"};
   document.getElementById("paid").onclick=async e=>{e.target.disabled=true;const cs=document.getElementById("cst");cs.textContent="Thank you! Watching for your payment… you can keep chatting, it unlocks by itself.";
-    await api("crypto_paid",{id:o.id});for(let i=0;i<120;i++){const r=await api("poll");if(r.state&&(p.key==="request"?r.state.req:p.key==="pack5"?r.state.pack:p.key==="album"?r.state.album:r.state.plan==="gf")){show(r.state);owned();loadAlbum();cs.textContent="Payment received, thank you! 🌹 It's all yours.";return}await new Promise(z=>setTimeout(z,10000))}
+    await api("crypto_paid",{id:o.id});for(let i=0;i<120;i++){const r=await api("poll");if(r.state&&(p.key==="pack5"?r.state.pack:p.key==="album"?r.state.album:r.state.plan==="gf")){show(r.state);owned();loadAlbum();cs.textContent="Payment received, thank you! 🌹 It's all yours.";return}await new Promise(z=>setTimeout(z,10000))}
     cs.textContent="Still waiting for it to arrive. It unlocks automatically; if it takes long, message me starting with Support:"}}
 document.querySelectorAll("[data-buy]").forEach(x=>x.onclick=()=>buy(x.dataset.buy));
 const pillsEl=document.getElementById("pills"),ageEl=document.getElementById("age"),ok18=document.getElementById("ok18");
@@ -262,7 +266,7 @@ document.getElementById("unlock").onclick=e=>{e.preventDefault();toPlans("Unlock
 async function waitPaid(){const w=add("team","Thank you! Confirming your payment…");for(let i=0;i<40;i++){const r=await api("poll");if(r.state&&(r.state.paid||r.state.bonus>0||r.state.album||r.state.pack)){w.textContent="Payment received, thank you! You're all set. Now, where were we? 🌹";show(r.state);loadAlbum();return}await new Promise(z=>setTimeout(z,3000))}w.textContent="Still waiting for the payment to confirm. If you were charged, it will unlock shortly; or ask for help by typing a message starting with Support:"}
 setInterval(async()=>{if(st&&st.paused){const r=await api("poll",{since:lastTs});(r.messages||[]).filter(m=>m.role==="team"&&m.ts>lastTs).forEach(m=>{add("team",m.text);lastTs=m.ts});show(r.state)}},20000);
 (async()=>{try{const r=await api("session",{...(CODE?{c:CODE}:{}),...(LINK?{u:LINK}:{})});token=r.token;try{localStorage.setItem("rose_token",token)}catch(e){}plans=r.plans;offers=r.offers||{};products=r.products||[];disclaimer=r.disclaimer||"";crypto=r.crypto;owned();
-  if(LINK){history.replaceState(null,"","chat.html"+location.hash)}if(location.hash==="#album"||location.hash==="#request"||location.hash==="#gf"||location.hash==="#pack5"){const k={gf:"request",pack5:"album"}[location.hash.slice(1)]||location.hash.slice(1);document.getElementById(k).scrollIntoView({block:"center"});setTimeout(()=>buy(k),400)}
+  if(LINK){history.replaceState(null,"","chat.html"+location.hash)}if(location.hash==="#album"||location.hash==="#gf"||location.hash==="#pack5"){const k=location.hash.slice(1);document.getElementById(k).scrollIntoView({block:"center"});setTimeout(()=>buy(k),400)}
   r.messages.forEach(m=>{add(m.role,m.text,m.url);lastTs=Math.max(lastTs,m.ts)});loadAlbum();show(r.state);
   if(!r.messages.length)fresh(true,r.welcome);else if(r.welcome)add("assistant",r.welcome);
   const q=new URLSearchParams(location.search);if(q.get("paid"))waitPaid();if(q.get("failed"))add("team","The payment didn't go through. Nothing was charged; you can try again any time.");
